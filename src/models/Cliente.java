@@ -17,8 +17,8 @@ public class Cliente implements Serializable {
     private int movil;
     private String token;
     private boolean isValid;
-//    private ArrayList<Pedido> pedidos;
-//    private ArrayList<Producto> carro;
+    private ArrayList<Pedido> pedidos;
+    private ArrayList<Producto> carro;
 
     //Constructor
     public Cliente(int id, String email, String clave, String nombre, String localidad, String provincia, String direccion, int movil) {
@@ -30,8 +30,8 @@ public class Cliente implements Serializable {
         this.provincia = provincia;
         this.direccion = direccion;
         this.movil = movil;
-//        pedidos = new ArrayList<>();
-//        carro = new ArrayList<>();
+        pedidos = new ArrayList<>();
+        carro = new ArrayList<>();
     }
 
     // Constructor BBDD

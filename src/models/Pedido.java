@@ -13,16 +13,16 @@ public class Pedido implements Comparable<Pedido>, Serializable {
     private LocalDate fechaEntregaEstimada;
     private int estado;
     private String comentario;
-    //private ArrayList<Producto> productos;
+    private ArrayList<Producto> productos;
 
     //Constructor
-    public Pedido(int id, LocalDate fechaPedido, LocalDate fechaEntregaEstimada, String comentario) {
+    public Pedido(int id, LocalDate fechaPedido, LocalDate fechaEntregaEstimada, String comentario, ArrayList<Producto> productos) {
         this.id = id;
         this.fechaPedido = fechaPedido;
         this.fechaEntregaEstimada = fechaEntregaEstimada;
         estado = 0;
         this.comentario = comentario;
-        //this.productos = productos;
+        this.productos = productos;
     }
 
     // Constructor BBDD

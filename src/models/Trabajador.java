@@ -10,7 +10,7 @@ public class Trabajador implements Serializable {
     private String pass;
     private String email;
     private int movil;
-    //private ArrayList<Pedido> pedidosAsignados;
+    private ArrayList<Pedido> pedidosAsignados;
 
     //Constructor
     public Trabajador(int id, String nombre, String pass, String email, int movil) {
@@ -19,7 +19,7 @@ public class Trabajador implements Serializable {
         this.pass = pass;
         this.email = email;
         this.movil = movil;
-        //pedidosAsignados = new ArrayList<>();
+        pedidosAsignados = new ArrayList<>();
     }
 
     // Getters y Setters
