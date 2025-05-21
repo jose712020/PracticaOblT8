@@ -7,6 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public interface DAOPedidoProductos {
-    public HashMap<Integer, ArrayList<Integer>> readAll(DAOManager dao, Pedido pedido, ArrayList<Integer> productos);
-    public boolean insert(DAOManager dao, Pedido pedido, Producto producto);
+    public ArrayList<Producto> readAll(DAOManager dao, int idPedido);
+    public boolean insert(DAOManager dao, Pedido pedido);
 }

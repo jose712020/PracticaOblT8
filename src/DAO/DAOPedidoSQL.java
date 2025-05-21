@@ -10,6 +10,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class DAOPedidoSQL implements DAOPedido {
+    private DAOPedidoProductosSQL daoPedidoProductos = new DAOPedidoProductosSQL();
+
     @Override
     public ArrayList<Pedido> readAll(DAOManager dao) {
         ArrayList<Pedido> pedidos = new ArrayList<>();
@@ -25,7 +27,8 @@ public class DAOPedidoSQL implements DAOPedido {
                             rs.getDate("fechaPedido").toLocalDate(),
                             rs.getDate("fechaEntregaEstimada").toLocalDate(),
                             rs.getInt("estado"),
-                            rs.getString("comentario")
+                            rs.getString("comentario"),
+                            daoPedidoProductos.readAll(dao, rs.getInt("id"))
                     ));
                 }
             }
