@@ -1082,7 +1082,7 @@ public class main {
             }
         } while (telefonoTeclado == -2);
 
-        if (!Controlador.modificaDatosPersonalesCliente(nombreTeclado, contraTeclado, correoTeclado, localidadTeclado,
+        if (!controlador.modificaDatosPersonalesCliente(nombreTeclado, contraTeclado, correoTeclado, localidadTeclado,
                 provinciaTeclado, direccionTeclado, telefonoTeclado, cliente))
             System.out.println("Ha ocurrido un error...");
         else {
@@ -1312,7 +1312,7 @@ public class main {
             }
         } while (telefonoTeclado == -2);
 
-        if (!Controlador.modificaDatosPersonalesTrabajador(nombreTeclado, contraTeclado,
+        if (!controlador.modificaDatosPersonalesTrabajador(nombreTeclado, contraTeclado,
                 correoTeclado, telefonoTeclado, trabajador)) System.out.println("Ha ocurrido un error...");
         else System.out.println("Tus datos han sido modificados...");
     }

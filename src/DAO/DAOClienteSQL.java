@@ -41,6 +41,20 @@ public class DAOClienteSQL implements DAOCliente{
     }
 
     @Override
+    public boolean buscaClientePrueba(DAOManager dao) {
+        try {
+            dao.open();
+            String sentencia = "SELECT * FROM `Cliente` WHERE `Cliente`.`id` = '" + 99999 + "'";
+            Statement stmt = dao.getConn().createStatement();
+            stmt.executeUpdate(sentencia);
+            dao.close();
+        } catch (Exception e) {
+            return false;
+        }
+        return false;
+    }
+
+    @Override
     public boolean insert(DAOManager dao, Cliente cliente) {
         try {
             dao.open();

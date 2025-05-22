@@ -34,14 +34,13 @@ public class Controlador implements Serializable {
         daoProductoSQL = new DAOProductoSQL();
         daoTrabajadorSQL = new DAOTrabajadorSQL();
 
-        ArrayList<Producto> catalogo = Persistencia.leeCatalogo();
+        ArrayList<Producto> catalogo = DataProductos.getProductosMock();
         if (daoProductoSQL.readAll(dao).isEmpty()) {
             mockCatalogo(catalogo);
         }
 
-        if (daoAdminSQL.readAdmin(dao) == null) {
-            mockAdmin();
-        }
+        mockAdmin();
+
     }
 
     // Mock que rellena los catalogos en bbdd
@@ -356,7 +355,10 @@ public class Controlador implements Serializable {
         Trabajador trabajador = new Trabajador(generaIdTrabajador(), nombre, clave, email, movil);
         boolean bandera = getTrabajadores().add(trabajador);
 
-        if (bandera) Persistencia.guardaTrabajadorEnDisco(trabajador);
+        if (bandera) {
+            //Persistencia.guardaTrabajadorEnDisco(trabajador);
+            daoTrabajadorSQL.insert(dao, trabajador);
+        }
 
         ArrayList<Pedido> pedidosSinAsignar = pedidosSinTrabajador();
         Trabajador candidato = buscaTrabajadorCandidatoParaAsignar();
@@ -415,7 +417,6 @@ public class Controlador implements Serializable {
             }
         }
 
-
         return pedidos;
     }
 
@@ -436,8 +437,11 @@ public class Controlador implements Serializable {
 
         if (bandera) {
             Cliente cliente = sacaClienteDeUnPedido(pedidoTemp.getId());
-            if (cliente != null) Persistencia.guardaActividadNuevoPedido(cliente.getId(), trabajadorTemp.getId());
-            Persistencia.guardaTrabajadorEnDisco(trabajadorTemp);
+            if (cliente != null) {
+                //Persistencia.guardaActividadNuevoPedido(cliente.getId(), trabajadorTemp.getId());
+                daoPedidoSQL.updateTrabajador(dao, pedidoTemp, trabajadorTemp);
+            }
+            //Persistencia.guardaTrabajadorEnDisco(trabajadorTemp);
         }
 
         return bandera;
@@ -637,7 +641,8 @@ public class Controlador implements Serializable {
         String token = "JM-" + (int) (Math.random() * 99999999);
         c.setToken(token);
         c.setValid(false);
-        Persistencia.guardaClienteEnDisco(c);
+        //Persistencia.guardaClienteEnDisco(c);
+        daoClienteSQL.update(dao, c);
         Comunicaciones.enviaCorreoToken(c.getEmail(), "¡Hola! Bienvenido a FERNANSHOP " + c.getNombre() + ", " +
                 "tu token de verificación de la cuenta es", "TU CÓDIGO DE VERIFICACIÓN DE CUENTA", token, c.getNombre());
         return token;
@@ -648,7 +653,8 @@ public class Controlador implements Serializable {
         // Miramos si el usuario pasado coincide con algun cliente
         if (c.getToken().equals(tokenTeclado)) {
             c.setValid(true);
-            Persistencia.guardaClienteEnDisco(c);
+            //Persistencia.guardaClienteEnDisco(c);
+            daoClienteSQL.update(dao, c);
             return true;
         } else c.setValid(false);
 
@@ -661,7 +667,8 @@ public class Controlador implements Serializable {
 
         if (cliente != null) {
             cliente.vaciaCarro();
-            Persistencia.guardaClienteEnDisco(cliente);
+            //Persistencia.guardaClienteEnDisco(cliente);
+            daoClienteSQL.update(dao, cliente);
             return true;
         }
         return false;
@@ -690,6 +697,7 @@ public class Controlador implements Serializable {
         Pedido pedido = buscaPedidoById(idPedido);
         if (pedido == null) return false;
         pedido.addComentario(comentarioTeclado);
+        daoPedidoSQL.update(dao, pedido);
         return true;
     }
 
@@ -708,7 +716,7 @@ public class Controlador implements Serializable {
     }
 
     // Metodo que cambia los datos personales del cliente
-    public static boolean modificaDatosPersonalesCliente(String nombreTeclado, String contraTeclado, String correoTeclado, String localidadTeclado, String provinciaTeclado, String direccionTeclado, int telefonoTeclado, Cliente cliente) {
+    public boolean modificaDatosPersonalesCliente(String nombreTeclado, String contraTeclado, String correoTeclado, String localidadTeclado, String provinciaTeclado, String direccionTeclado, int telefonoTeclado, Cliente cliente) {
         cliente.setNombre(nombreTeclado);
         cliente.setClave(contraTeclado);
         cliente.setEmail(correoTeclado);
@@ -716,17 +724,19 @@ public class Controlador implements Serializable {
         if (!provinciaTeclado.equalsIgnoreCase("no")) cliente.setLocalidad(provinciaTeclado);
         if (!direccionTeclado.equalsIgnoreCase("no")) cliente.setLocalidad(direccionTeclado);
         if (telefonoTeclado != -1) cliente.setMovil(telefonoTeclado);
-        Persistencia.guardaClienteEnDisco(cliente);
+        //Persistencia.guardaClienteEnDisco(cliente);
+        daoClienteSQL.update(dao, cliente);
         return true;
     }
 
     // Metodo que cambia los datos personales del trabajador
-    public static boolean modificaDatosPersonalesTrabajador(String nombreTeclado, String contraTeclado, String correoTeclado, int telefonoTeclado, Trabajador trabajador) {
+    public boolean modificaDatosPersonalesTrabajador(String nombreTeclado, String contraTeclado, String correoTeclado, int telefonoTeclado, Trabajador trabajador) {
         trabajador.setNombre(nombreTeclado);
         trabajador.setPass(contraTeclado);
         trabajador.setEmail(correoTeclado);
         if (telefonoTeclado != -1) trabajador.setMovil(telefonoTeclado);
-        Persistencia.guardaTrabajadorEnDisco(trabajador);
+        //Persistencia.guardaTrabajadorEnDisco(trabajador);
+        daoTrabajadorSQL.update(dao, trabajador);
         return true;
     }
 
@@ -746,7 +756,10 @@ public class Controlador implements Serializable {
     public boolean quitaProductoCarroCliente(Cliente cliente, int idProducto) {
         boolean borrado = cliente.quitaProducto(idProducto);
 
-        if (borrado) Persistencia.guardaClienteEnDisco(cliente);
+        if (borrado) {
+            //Persistencia.guardaClienteEnDisco(cliente);
+            daoClienteSQL.update(dao, cliente);
+        }
 
         return borrado;
     }
@@ -829,7 +842,8 @@ public class Controlador implements Serializable {
             Cliente c = sacaClienteDeUnPedido(pedido.getId());
             if (c != null) {
                 Comunicaciones.enviaCorreoPedidoEstadoCliente(c.getEmail(), "PEDIDO MODIFICADO", pedido);
-                Persistencia.guardaClienteEnDisco(c);
+                //Persistencia.guardaClienteEnDisco(c);
+                daoClienteSQL.update(dao, c);
                 enviaCorreoPedidoModificadoTrabajador(pedido);
             }
         }
@@ -867,14 +881,15 @@ public class Controlador implements Serializable {
 
     // Metodo que recupera una copia de seguridad en la ruta que nos pasen
     public boolean recuperaBackup(String rutaBackup) {
-/*        Controlador recuperado = Persistencia.recuperaBackup(rutaBackup);
+        /*Controlador recuperado = Persistencia.recuperaBackup(rutaBackup);
         if (recuperado == null) return false;
         //Borramos a los clientes en disco
         for (Cliente c : getClientes()) {
             //Persistencia.borraCliente(c.getId());
             daoClienteSQL.delete(dao, c);
         }
-        this.getTrabajadores() = recuperado.getTrabajadores();
+        ArrayList<Trabajador> trabajadores = recuperado.getTrabajadores();
+        getTrabajadores() = trabajadores;
         //Recuperamos los clientes
         for (Cliente c : getClientes()) {
             //Persistencia.guardaClienteEnDisco(c);
@@ -965,9 +980,9 @@ public class Controlador implements Serializable {
     public ArrayList<Pedido> getTodosPedidosSinGestionar() {
         ArrayList<Pedido> pedidos = new ArrayList<>();
 
-        for (Cliente c : getClientes()){
-            if (!c.getPedidos().isEmpty()){
-                for (Pedido p : c.getPedidos()){
+        for (Cliente c : getClientes()) {
+            if (!c.getPedidos().isEmpty()) {
+                for (Pedido p : c.getPedidos()) {
                     if (p.getEstado() != 2 && p.getEstado() != 3) pedidos.add(p);
                 }
             }

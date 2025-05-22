@@ -9,4 +9,5 @@ public interface DAOTrabajador {
     public boolean insert(DAOManager dao, Trabajador trabajador);
     public boolean update(DAOManager dao, Trabajador trabajador);
     public boolean delete(DAOManager dao, Trabajador trabajador);
+    public boolean buscaTrabajadorPrueba(DAOManager dao);
 }

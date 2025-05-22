@@ -81,4 +81,18 @@ public class DAOTrabajadorSQL implements DAOTrabajador {
             return false;
         }
     }
+
+    @Override
+    public boolean buscaTrabajadorPrueba(DAOManager dao) {
+        try {
+            dao.open();
+            String sentencia = "SELECT * FROM `Trabajador` WHERE `Trabajador`.`id` = '" + 100000 + "'";
+            Statement stmt = dao.getConn().createStatement();
+            stmt.executeUpdate(sentencia);
+            dao.close();
+        } catch (Exception e) {
+            return false;
+        }
+        return false;
+    }
 }
