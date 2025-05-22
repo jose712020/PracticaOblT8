@@ -73,4 +73,18 @@ public class DAOProductoSQL implements DAOProducto {
             return false;
         }
     }
+
+    @Override
+    public boolean delete(DAOManager dao, Producto producto) {
+        try {
+            dao.open();
+            String sentencia = "DELETE FROM Producto WHERE `Producto`.`id` = '" + producto.getId() + "'";
+            Statement stmt = dao.getConn().createStatement();
+            stmt.executeUpdate(sentencia);
+            dao.close();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

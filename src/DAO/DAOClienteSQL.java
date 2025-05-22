@@ -74,4 +74,18 @@ public class DAOClienteSQL implements DAOCliente{
             return false;
         }
     }
+
+    @Override
+    public boolean delete(DAOManager dao, Cliente cliente) {
+        try {
+            dao.open();
+            String sentencia = "DELETE FROM Cliente WHERE `Cliente`.`id` = '" + cliente.getId() + "'";
+            Statement stmt = dao.getConn().createStatement();
+            stmt.executeUpdate(sentencia);
+            dao.close();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

@@ -67,4 +67,18 @@ public class DAOTrabajadorSQL implements DAOTrabajador {
             return false;
         }
     }
+
+    @Override
+    public boolean delete(DAOManager dao, Trabajador trabajador) {
+        try {
+            dao.open();
+            String sentencia = "DELETE FROM Trabajador WHERE `Trabajador`.`id` = '" + trabajador.getId() + "'";
+            Statement stmt = dao.getConn().createStatement();
+            stmt.executeUpdate(sentencia);
+            dao.close();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
