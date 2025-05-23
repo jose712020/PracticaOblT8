@@ -12,7 +12,7 @@ public class DAOManager {
     private final String PASS;
     private static DAOManager singlenton; //Atributo estatico que guarda una referencia al DAO
 
-    private DAOManager() { //Constructor privado para que no se pueda llamar las veces que se quiera
+    public DAOManager() { //Constructor privado para que no se pueda llamar las veces que se quiera
         this.conn = null;
         this.URL = "jdbc:mysql://localhost:3306/practicaOblT8?autoReconnect=true&useSSL=false"; //Enlazo la dirección del servidor y de la base de datos a usar
         this.USER = "root"; //Usuario de la BBDD

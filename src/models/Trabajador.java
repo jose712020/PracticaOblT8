@@ -1,5 +1,8 @@
 package models;
 
+import DAO.DAOManager;
+import DAO.DAOPedidoSQL;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -11,6 +14,8 @@ public class Trabajador implements Serializable {
     private String email;
     private int movil;
     private ArrayList<Pedido> pedidosAsignados;
+    private DAOManager dao = DAOManager.getSinglentonInstance();
+    private DAOPedidoSQL daoPedidoSQL = new DAOPedidoSQL();
 
     //Constructor
     public Trabajador(int id, String nombre, String pass, String email, int movil) {
@@ -64,7 +69,7 @@ public class Trabajador implements Serializable {
     }
 
     public ArrayList<Pedido> getPedidosAsignados() {
-        return pedidosAsignados;
+        return daoPedidoSQL.readPedidosByIdTrabajador(dao, this);
     }
 
     public void setPedidosAsignados(ArrayList<Pedido> pedidosAsignados) {
@@ -84,7 +89,7 @@ public class Trabajador implements Serializable {
 
     // Metodo que busca en los pedidos los pedidos pendientes
     public Pedido buscaPedidoAsignadoPendiente(int idPedido) {
-        for (Pedido p : pedidosAsignados) {
+        for (Pedido p : getPedidosAsignados()) {
             if (p.getId() == idPedido && (p.getEstado() == 3 || p.getEstado() == 4)) return p;
         }
         return null;
@@ -92,7 +97,7 @@ public class Trabajador implements Serializable {
 
     // Metodo que busca en los pedidos los pedidos completados
     public Pedido buscaPedidoAsignadoCompletado(int idPedido) {
-        for (Pedido p : pedidosAsignados) {
+        for (Pedido p : getPedidosAsignados()) {
             if (p.getId() == idPedido && (p.getEstado() == 3 || p.getEstado() == 4)) return p;
         }
         return null;
@@ -109,7 +114,7 @@ public class Trabajador implements Serializable {
 
         if (pedidosAsignados == null) return pedidosPendientes;
 
-        for (Pedido p : pedidosAsignados) {
+        for (Pedido p : getPedidosAsignados()) {
              if (p.getEstado() == 0 || p.getEstado() == 1) pedidosPendientes.add(p);
         }
         return pedidosPendientes;
@@ -121,7 +126,7 @@ public class Trabajador implements Serializable {
 
         if (pedidosAsignados == null) return pedidosCompletados;
 
-        for (Pedido p : pedidosAsignados) {
+        for (Pedido p : getPedidosAsignados()) {
             if (p.getEstado() == 2 || p.getEstado() == 3) pedidosCompletados.add(p);
         }
         return pedidosCompletados;

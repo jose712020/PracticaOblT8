@@ -118,12 +118,13 @@ public class DAOPedidoSQL implements DAOPedido {
     @Override
     public ArrayList<Pedido> readPedidosByIdTrabajador(DAOManager dao, Trabajador trabajador) {
         ArrayList<Pedido> pedidos = new ArrayList<>();
-        String sentencia = "SELECT * FROM Pedido";
+        String sentencia = "SELECT * FROM Pedido WHERE `id` = '" + trabajador.getId() + "'";
 
         try {
             dao.open();
             PreparedStatement ps = dao.getConn().prepareStatement(sentencia);
             try (ResultSet rs = ps.executeQuery()) {
+                // TODO no entra dentro del bucle
                 while (rs.next()) {
                     pedidos.add(new Pedido(
                             rs.getInt("id"),
