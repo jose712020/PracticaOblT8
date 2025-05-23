@@ -1,5 +1,8 @@
 package models;
 
+import DAO.DAOCarroSQL;
+import DAO.DAOManager;
+import DAO.DAOPedidoSQL;
 import controlador.Controlador;
 
 import java.io.Serializable;
@@ -19,6 +22,9 @@ public class Cliente implements Serializable {
     private boolean isValid;
     private ArrayList<Pedido> pedidos;
     private ArrayList<Producto> carro;
+    private DAOManager dao = DAOManager.getSinglentonInstance();
+    private DAOCarroSQL daoCarroSQL = new DAOCarroSQL();
+    private DAOPedidoSQL daoPedidoSQL = new DAOPedidoSQL();
 
     //Constructor
     public Cliente(int id, String email, String clave, String nombre, String localidad, String provincia, String direccion, int movil) {
@@ -131,7 +137,7 @@ public class Cliente implements Serializable {
     }
 
     public ArrayList<Pedido> getPedidos() {
-        return pedidos;
+        return daoPedidoSQL.readPedidosByIdCliente(dao, this);
     }
 
     public void setPedidos(ArrayList<Pedido> pedidos) {
@@ -139,7 +145,7 @@ public class Cliente implements Serializable {
     }
 
     public ArrayList<Producto> getCarro() {
-        return carro;
+        return daoCarroSQL.readAll(dao, this);
     }
 
     public void setCarro(ArrayList<Producto> carro) {
@@ -168,7 +174,7 @@ public class Cliente implements Serializable {
 
     // Metodo que quita un producto en el carro
     public boolean quitaProducto(int idProducto) {
-        for (Producto p : carro) {
+        for (Producto p : getCarro()) {
             if (p.getId() == idProducto) return carro.remove(p);
         }
         return false;
@@ -176,12 +182,12 @@ public class Cliente implements Serializable {
 
     // Metodo que comprueba la longitud de un producto
     public int numProductosCarro() {
-        return carro.size();
+        return getCarro().size();
     }
 
     // Metodo que vacia un carro
     public void vaciaCarro() {
-        carro.clear();
+        daoCarroSQL.deleteAll(dao, this);
     }
 
     // Metodo que añade un pedido
@@ -193,7 +199,7 @@ public class Cliente implements Serializable {
     public float precioCarroSinIva(int IVA) {
         float precio = 0;
 
-        for (Producto p : carro) {
+        for (Producto p : getCarro()) {
             precio += p.getPrecio();
         }
         return precio;
@@ -203,7 +209,7 @@ public class Cliente implements Serializable {
     public float precioIVACarro(int IVA) {
         float precio = 0;
 
-        for (Producto p : carro) {
+        for (Producto p : getCarro()) {
             precio += p.getPrecio() * (IVA / 100f);
         }
         return precio;
@@ -216,7 +222,7 @@ public class Cliente implements Serializable {
 
     // Metodo que comprueba si existe un producto en el carrito
     public boolean existeProductoCarro(int idProducto) {
-        for (Producto p : carro) {
+        for (Producto p : getCarro()) {
             if (p.getId() == idProducto) return true;
         }
         return false;

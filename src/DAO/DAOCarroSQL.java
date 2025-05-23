@@ -58,7 +58,7 @@ public class DAOCarroSQL implements DAOCarro{
         try {
             dao.open();
             String sentencia = "DELETE FROM Carro WHERE `idCliente` = '" + cliente.getId() + "' AND `idProducto` = '" +
-                    producto.getId() + "'";
+                    producto.getId() + "' LIMIT 1";
             Statement stmt = dao.getConn().createStatement();
             stmt.executeUpdate(sentencia);
             dao.close();

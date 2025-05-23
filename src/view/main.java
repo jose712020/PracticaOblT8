@@ -757,7 +757,6 @@ public class main {
             if (cancelaPedido.equalsIgnoreCase("s"))
                 if (controlador.cancelaPedidoCliente(cliente.getId()))
                     System.out.println("El pedido se ha cancelado con éxito...");
-
         }
     }
 

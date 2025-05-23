@@ -126,6 +126,7 @@ public class Controlador implements Serializable {
         //cliente.addProductoCarro(copia);
         //Persistencia.guardaClienteEnDisco(cliente);
         daoCarroSQL.insert(dao, cliente, copia);
+        //cliente.addProductoCarro(temp);
         return true;
     }
 
@@ -145,6 +146,7 @@ public class Controlador implements Serializable {
         productosCarro.addAll(daoCarroSQL.readAll(dao, temp));
 
         if (productosCarro.isEmpty()) return false;
+//        if (temp.getCarro().isEmpty()) return false;
 
         ArrayList<Producto> copiaCarro = new ArrayList<>();
         copiaCarro.addAll(temp.getCarro());
@@ -668,7 +670,7 @@ public class Controlador implements Serializable {
         if (cliente != null) {
             cliente.vaciaCarro();
             //Persistencia.guardaClienteEnDisco(cliente);
-            daoClienteSQL.update(dao, cliente);
+            daoCarroSQL.deleteAll(dao, cliente);
             return true;
         }
         return false;
@@ -761,14 +763,7 @@ public class Controlador implements Serializable {
 
     // Metodo que quita un producto del carro del cliente
     public boolean quitaProductoCarroCliente(Cliente cliente, int idProducto) {
-        boolean borrado = cliente.quitaProducto(idProducto);
-
-        if (borrado) {
-            //Persistencia.guardaClienteEnDisco(cliente);
-            daoCarroSQL.delete(dao, cliente, buscaProductoById(idProducto));
-        }
-
-        return borrado;
+        return daoCarroSQL.delete(dao, cliente, buscaProductoById(idProducto));
     }
 
     // Metodo que devuelve los pedidos que esten Cancelados
