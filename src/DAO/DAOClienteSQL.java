@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 public class DAOClienteSQL implements DAOCliente{
     private DAOPedidoSQL daoPedidoSQL = new DAOPedidoSQL();
+    private DAOCarroSQL daoCarroSQL = new DAOCarroSQL();
+
     @Override
     public ArrayList<Cliente> readAll(DAOManager dao) {
         ArrayList<Cliente> clientes = new ArrayList<>();
@@ -35,6 +37,7 @@ public class DAOClienteSQL implements DAOCliente{
                 dao.close();
                 for (Cliente c : clientes) {
                     c.setPedidos(daoPedidoSQL.readPedidosByIdCliente(dao, c));
+                    c.setCarro(daoCarroSQL.readAll(dao, c));
                 }
             }
         } catch (Exception e) {
@@ -96,11 +99,11 @@ public class DAOClienteSQL implements DAOCliente{
     public boolean update(DAOManager dao, Cliente cliente) {
         try {
             dao.open();
-            String sentencia = "UPDATE Cliente SET 'email' = '" + cliente.getEmail() + "', `clave` = '" +
+            String sentencia = "UPDATE Cliente SET `email` = '" + cliente.getEmail() + "', `clave` = '" +
                     cliente.getClave() + "', `nombre` = '" + cliente.getNombre() + "', `localidad` = '" +
                     cliente.getLocalidad() + "', `provincia` = '" + cliente.getProvincia() + "', `direccion` = '" +
                     cliente.getDireccion() + "', `movil` = '" + cliente.getMovil() + "', `token` = '" + cliente.getToken() +
-                    "', `isValid` = '" + cliente.isValid() + "' WHERE `Cliente`.`id` = " + cliente.getId();
+                    "', `isValid` = '" + (cliente.isValid() ? 1 : 0) + "' WHERE `Cliente`.`id` = " + cliente.getId();
             Statement stmt = dao.getConn().createStatement();
             stmt.executeUpdate(sentencia);
             dao.close();

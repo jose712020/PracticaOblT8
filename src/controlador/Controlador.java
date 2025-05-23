@@ -744,7 +744,10 @@ public class Controlador implements Serializable {
     public boolean borraTrabajador(Trabajador temp) {
         // Persistencia.borraTrabajador(temp.getId());
         daoTrabajadorSQL.delete(dao, temp);
-        return getTrabajadores().remove(temp);
+        boolean bandera = getTrabajadores().contains(temp);
+
+        if (bandera) return false;
+        return true;
     }
 
     // Metodo que busca si se ha iniciado los datos de prueba
@@ -762,7 +765,7 @@ public class Controlador implements Serializable {
 
         if (borrado) {
             //Persistencia.guardaClienteEnDisco(cliente);
-            daoClienteSQL.update(dao, cliente);
+            daoCarroSQL.delete(dao, cliente, buscaProductoById(idProducto));
         }
 
         return borrado;
