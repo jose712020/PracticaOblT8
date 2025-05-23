@@ -41,34 +41,6 @@ public class DAOPedidoSQL implements DAOPedido {
     }
 
     @Override
-    public ArrayList<Pedido> readAllByTrabajador(DAOManager dao, Trabajador trabajador) {
-        ArrayList<Pedido> pedidos = new ArrayList<>();
-        String sentencia = "SELECT * FROM Pedido";
-
-        try {
-            dao.open();
-            PreparedStatement ps = dao.getConn().prepareStatement(sentencia);
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    pedidos.add(new Pedido(
-                            rs.getInt("id"),
-                            rs.getDate("fechaPedido").toLocalDate(),
-                            rs.getDate("fechaEntregaEstimada").toLocalDate(),
-                            rs.getInt("estado"),
-                            rs.getString("comentario"),
-                            daoPedidoProductos.readAll(dao, rs.getInt("id"))
-                    ));
-                }
-            }
-            dao.close();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        return pedidos;
-    }
-
-    @Override
     public boolean insert(DAOManager dao, Pedido pedido, Cliente cliente) {
         try {
             dao.open();
@@ -114,5 +86,60 @@ public class DAOPedidoSQL implements DAOPedido {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    @Override
+    public ArrayList<Pedido> readPedidosByIdCliente(DAOManager dao, Cliente cliente) {
+        ArrayList<Pedido> pedidos = new ArrayList<>();
+        String sentencia = "SELECT * FROM Pedido WHERE `idCliente` = '" + cliente.getId() + "'";
+
+        try {
+            dao.open();
+            PreparedStatement ps = dao.getConn().prepareStatement(sentencia);
+            try (ResultSet rs = ps.executeQuery()){
+                while (rs.next()) {
+                    pedidos.add(new Pedido(
+                            rs.getInt("id"),
+                            rs.getDate("fechaPedido").toLocalDate(),
+                            rs.getDate("fechaEntregaEstimada").toLocalDate(),
+                            rs.getInt("estado"),
+                            rs.getString("comentario"),
+                            daoPedidoProductos.readAll(dao, rs.getInt("id"))
+                    ));
+                }
+            }
+            dao.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return pedidos;
+    }
+
+    @Override
+    public ArrayList<Pedido> readPedidosByIdTrabajador(DAOManager dao, Trabajador trabajador) {
+        ArrayList<Pedido> pedidos = new ArrayList<>();
+        String sentencia = "SELECT * FROM Pedido";
+
+        try {
+            dao.open();
+            PreparedStatement ps = dao.getConn().prepareStatement(sentencia);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    pedidos.add(new Pedido(
+                            rs.getInt("id"),
+                            rs.getDate("fechaPedido").toLocalDate(),
+                            rs.getDate("fechaEntregaEstimada").toLocalDate(),
+                            rs.getInt("estado"),
+                            rs.getString("comentario"),
+                            daoPedidoProductos.readAll(dao, rs.getInt("id"))
+                    ));
+                }
+            }
+            dao.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return pedidos;
     }
 }

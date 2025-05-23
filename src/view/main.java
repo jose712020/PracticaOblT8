@@ -243,16 +243,17 @@ public class main {
 
     // Función que nos llevara a un menu específico (Admin, Trabajador o Cliente)
     private static void menuUsuario(Controlador controlador, Object user) {
-        menuAdmin(controlador, user);
-        menuTrabajadores(controlador, user);
-        menuClientes(controlador, user);
+        if (user instanceof Admin) menuAdmin(controlador, user);
+        if (user instanceof Trabajador) menuTrabajadores(controlador, user);
+        if (user instanceof Cliente) menuClientes(controlador, user);
     }
 
     // Menu del cliente
     private static void menuClientes(Controlador controlador, Object user) {
         String op;
+        Cliente clienteRecibido = (Cliente) user;
         for (Cliente cliente : controlador.getClientes()) {
-            if (user.equals(cliente)) {
+            if (((Cliente) user).getId() == cliente.getId()) {
                 compruebaToken(controlador, cliente);
                 if (cliente.isValid()) {
                     do {
@@ -310,8 +311,9 @@ public class main {
     // Menu del trabajador
     private static void menuTrabajadores(Controlador controlador, Object user) {
         String op;
+        Trabajador trabajadorRecibido = (Trabajador) user;
         for (Trabajador trabajador : controlador.getTrabajadores()) {
-            if (user.equals(trabajador)) {
+            if (((Trabajador) user).getId() == trabajador.getId()) {
                 do {
                     Menus.menuTrabajador(controlador, trabajador);
                     op = S.nextLine();
@@ -376,8 +378,9 @@ public class main {
     // Menu del admin
     private static void menuAdmin(Controlador controlador, Object user) {
         String op;
+        Admin adminRecibido = (Admin) user;
         for (Admin admin : controlador.getAdmins()) {
-            if (user.equals(admin)) {
+            if (((Admin) user).getId() == admin.getId()) {
                 do {
                     estadisticasApp(controlador);
                     System.out.println();

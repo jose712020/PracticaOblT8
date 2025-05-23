@@ -9,10 +9,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class DAOTrabajadorSQL implements DAOTrabajador {
+    private DAOPedidoSQL daoPedidoSQL = new DAOPedidoSQL();
     @Override
     public ArrayList<Trabajador> readAll(DAOManager dao) {
-        ArrayList<Trabajador> trabajador = new ArrayList<>();
-
+        ArrayList<Trabajador> lista = new ArrayList<>();
         String sentencia = "SELECT * FROM Trabajador";
 
         try {
@@ -20,7 +20,7 @@ public class DAOTrabajadorSQL implements DAOTrabajador {
             PreparedStatement ps = dao.getConn().prepareStatement(sentencia);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    trabajador.add(new Trabajador(
+                    lista.add(new Trabajador(
                             rs.getInt("id"),
                             rs.getString("nombre"),
                             rs.getString("pass"),
@@ -30,10 +30,13 @@ public class DAOTrabajadorSQL implements DAOTrabajador {
                 }
                 dao.close();
             }
+            for (Trabajador t : lista) {
+                t.setPedidosAsignados(daoPedidoSQL.readPedidosByIdTrabajador(dao, t));
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return trabajador;
+        return lista;
     }
 
     @Override
@@ -83,16 +86,27 @@ public class DAOTrabajadorSQL implements DAOTrabajador {
     }
 
     @Override
-    public boolean buscaTrabajadorPrueba(DAOManager dao) {
+    public Trabajador buscaTrabajadorPrueba(DAOManager dao) {
         try {
             dao.open();
+            Trabajador trabajador = null;
             String sentencia = "SELECT * FROM `Trabajador` WHERE `Trabajador`.`id` = '" + 100000 + "'";
-            Statement stmt = dao.getConn().createStatement();
-            stmt.executeUpdate(sentencia);
+            PreparedStatement ps = dao.getConn().prepareStatement(sentencia);
+            try (ResultSet rs = ps.executeQuery()){
+                while (rs.next()) {
+                    trabajador = new Trabajador(
+                            rs.getInt("id"),
+                            rs.getString("nombre"),
+                            rs.getString("pass"),
+                            rs.getString("email"),
+                            rs.getInt("movil")
+                    );
+                }
+            }
             dao.close();
+            return trabajador;
         } catch (Exception e) {
-            return false;
+            return null;
         }
-        return false;
     }
 }

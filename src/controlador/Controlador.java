@@ -749,7 +749,11 @@ public class Controlador implements Serializable {
 
     // Metodo que busca si se ha iniciado los datos de prueba
     public boolean buscaDatosPrueba() {
-        return Persistencia.datosPrueba();
+        boolean bandera = false;
+        if (daoClienteSQL.buscaClientePrueba(dao) != null && daoTrabajadorSQL.buscaTrabajadorPrueba(dao) != null)
+            bandera = true;
+        return bandera;
+        //return Persistencia.datosPrueba();
     }
 
     // Metodo que quita un producto del carro del cliente

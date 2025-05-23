@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class DAOClienteSQL implements DAOCliente{
+    private DAOPedidoSQL daoPedidoSQL = new DAOPedidoSQL();
     @Override
     public ArrayList<Cliente> readAll(DAOManager dao) {
         ArrayList<Cliente> clientes = new ArrayList<>();
@@ -16,7 +17,7 @@ public class DAOClienteSQL implements DAOCliente{
             dao.open();
             String sentencia = "SELECT * FROM Cliente";
             PreparedStatement ps = dao.getConn().prepareStatement(sentencia);
-            try (ResultSet rs = ps.getResultSet()) {
+            try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     clientes.add(new Cliente(
                             rs.getInt("id"),
@@ -31,8 +32,11 @@ public class DAOClienteSQL implements DAOCliente{
                             rs.getBoolean("isValid")
                     ));
                 }
+                dao.close();
+                for (Cliente c : clientes) {
+                    c.setPedidos(daoPedidoSQL.readPedidosByIdCliente(dao, c));
+                }
             }
-            dao.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -41,17 +45,32 @@ public class DAOClienteSQL implements DAOCliente{
     }
 
     @Override
-    public boolean buscaClientePrueba(DAOManager dao) {
+    public Cliente buscaClientePrueba(DAOManager dao) {
         try {
             dao.open();
+            Cliente cliente = null;
             String sentencia = "SELECT * FROM `Cliente` WHERE `Cliente`.`id` = '" + 99999 + "'";
-            Statement stmt = dao.getConn().createStatement();
-            stmt.executeUpdate(sentencia);
+            PreparedStatement ps = dao.getConn().prepareStatement(sentencia);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    cliente = new Cliente(rs.getInt("id"),
+                            rs.getString("email"),
+                            rs.getString("clave"),
+                            rs.getString("nombre"),
+                            rs.getString("localidad"),
+                            rs.getString("provincia"),
+                            rs.getString("direccion"),
+                            rs.getInt("movil"),
+                            rs.getString("token"),
+                            rs.getBoolean("isValid")
+                    );
+                }
+            }
             dao.close();
+            return cliente;
         } catch (Exception e) {
-            return false;
+            return null;
         }
-        return false;
     }
 
     @Override
@@ -59,9 +78,11 @@ public class DAOClienteSQL implements DAOCliente{
         try {
             dao.open();
             String sentencia = "INSERT INTO `Cliente` (`id`, `email`, `clave`, `nombre`, `localidad`, `provincia`, `direccion`, " +
-                    "`movil`) VALUES ('" + cliente.getId() + "', '" + cliente.getEmail() + "', '" +
+                    "`movil`, `token`, `isValid`) VALUES ('" + cliente.getId() + "', '" + cliente.getEmail() + "', '" +
                     cliente.getClave() + "', '" + cliente.getNombre() + "', '" + cliente.getLocalidad() + "', '" +
-                    cliente.getProvincia() + "', '" + cliente.getDireccion() + "', '" + cliente.getMovil() + "')";
+                    cliente.getProvincia() + "', '" + cliente.getDireccion() + "', '" + cliente.getMovil() + "', '" +
+                    cliente.getToken() + "', '"
+                    + (cliente.isValid() ? 1 : 0) + "')";
             Statement stmt = dao.getConn().createStatement();
             stmt.executeUpdate(sentencia);
             dao.close();
