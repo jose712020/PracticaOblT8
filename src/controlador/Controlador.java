@@ -323,7 +323,10 @@ public class Controlador implements Serializable {
         if (pedido == null) return false;
         boolean bandera = pedido.cambiaEstado(nuevoEstado);
 
-        if (bandera) Persistencia.guardaActividadActualizaPedido(pedido);
+        if (bandera) {
+            daoPedidoSQL.update(dao, pedido);
+            Persistencia.guardaActividadActualizaPedido(pedido);
+        }
 
         return bandera;
     }
@@ -834,7 +837,9 @@ public class Controlador implements Serializable {
     public boolean cambiaFechaEntregaPedido(int idPedido, LocalDate nuevaFecha) {
         Pedido pedido = buscaPedidoById(idPedido);
         if (pedido == null) return false;
-        return pedido.cambiaFechaEntrega(nuevaFecha);
+        boolean bandera = pedido.cambiaFechaEntrega(nuevaFecha);
+        if (bandera) daoPedidoSQL.update(dao, pedido);
+        return bandera;
     }
 
     // Metodo que envia un correo de que se ha modificado un pedido para el cliente

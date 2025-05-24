@@ -1359,8 +1359,12 @@ public class main {
 
     // Función que modifica el estado de un pedido, añade un comentario al pedido o cambia fecha
     private static void modificaPedido(Controlador controlador, Object usuario) {
-        Trabajador trabajador = buscaTrabajador(controlador, usuario);
-        Admin admin = buscaAdmin(controlador, usuario);
+        Trabajador trabajador = null;
+        Admin admin = null;
+
+        if (usuario instanceof Trabajador) trabajador = buscaTrabajador(controlador, usuario);
+        if (usuario instanceof Admin) admin = buscaAdmin(controlador, usuario);
+
         Pedido temp = null;
         if (trabajador != null) temp = seleccionaPedidoTrabajador(controlador, trabajador);
         if (admin != null) temp = seleccionaPedidoAdmin(controlador, admin);
@@ -1448,7 +1452,7 @@ public class main {
     // Función que busca al admin
     private static Admin buscaAdmin(Controlador controlador, Object usuario) {
         for (Admin a : controlador.getAdmins()) {
-            if (usuario.equals(a)) return a;
+            if (((Admin) usuario).getId() == a.getId()) return a;
         }
         return null;
     }
@@ -1456,7 +1460,7 @@ public class main {
     // Función que busca un trabajador
     private static Trabajador buscaTrabajador(Controlador controlador, Object usuario) {
         for (Trabajador t : controlador.getTrabajadores()) {
-            if (usuario.equals(t)) return t;
+            if (((Trabajador) usuario).getId() == t.getId()) return t;
         }
         return null;
     }
