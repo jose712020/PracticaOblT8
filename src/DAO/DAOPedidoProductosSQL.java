@@ -27,14 +27,9 @@ public class DAOPedidoProductosSQL implements DAOPedidoProductos {
                     lista.add(rs.getInt("id_producto"));
                 }
             }
+            dao.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            try {
-                dao.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
 
         for (Producto p : daoProducto.readAll(dao)) {
@@ -57,15 +52,10 @@ public class DAOPedidoProductosSQL implements DAOPedidoProductos {
                 Statement stmt = dao.getConn().createStatement();
                 stmt.executeUpdate(sentencia);
             }
+            dao.close();
             return true;
         } catch (Exception e) {
             return false;
-        } finally {
-            try {
-                dao.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 }

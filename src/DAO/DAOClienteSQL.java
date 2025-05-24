@@ -69,15 +69,10 @@ public class DAOClienteSQL implements DAOCliente{
                     );
                 }
             }
+            dao.close();
             return cliente;
         } catch (Exception e) {
             return null;
-        } finally {
-            try {
-                dao.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 
@@ -93,15 +88,10 @@ public class DAOClienteSQL implements DAOCliente{
                     + (cliente.isValid() ? 1 : 0) + "')";
             Statement stmt = dao.getConn().createStatement();
             stmt.executeUpdate(sentencia);
+            dao.close();
             return true;
         } catch (Exception e) {
             return false;
-        } finally {
-            try {
-                dao.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 
@@ -116,15 +106,10 @@ public class DAOClienteSQL implements DAOCliente{
                     "', `isValid` = '" + (cliente.isValid() ? 1 : 0) + "' WHERE `Cliente`.`id` = " + cliente.getId();
             Statement stmt = dao.getConn().createStatement();
             stmt.executeUpdate(sentencia);
+            dao.close();
             return true;
         } catch (Exception e) {
             return false;
-        } finally {
-            try {
-                dao.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 
@@ -135,15 +120,10 @@ public class DAOClienteSQL implements DAOCliente{
             String sentencia = "DELETE FROM Cliente WHERE `Cliente`.`id` = '" + cliente.getId() + "'";
             Statement stmt = dao.getConn().createStatement();
             stmt.executeUpdate(sentencia);
+            dao.close();
             return true;
         } catch (Exception e) {
             return false;
-        } finally {
-            try {
-                dao.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 }

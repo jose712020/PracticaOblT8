@@ -30,14 +30,9 @@ public class DAOProductoSQL implements DAOProducto {
                     ));
                 }
             }
+            dao.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            try {
-                dao.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
         return lista;
     }
@@ -56,15 +51,10 @@ public class DAOProductoSQL implements DAOProducto {
 
             Statement stmt = dao.getConn().createStatement();
             stmt.executeUpdate(sentencia);
+            dao.close();
             return true;
         } catch (Exception e) {
             return false;
-        } finally {
-            try {
-                dao.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 
@@ -78,15 +68,10 @@ public class DAOProductoSQL implements DAOProducto {
                     " `precio` = '" + producto.getPrecio() + "' WHERE `Producto`.`id` = " + producto.getId();
             Statement stmt = dao.getConn().createStatement();
             stmt.executeUpdate(sentencia);
+            dao.close();
             return true;
         } catch (Exception e) {
             return false;
-        } finally {
-            try {
-                dao.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 
@@ -97,15 +82,10 @@ public class DAOProductoSQL implements DAOProducto {
             String sentencia = "DELETE FROM Producto WHERE `Producto`.`id` = '" + producto.getId() + "'";
             Statement stmt = dao.getConn().createStatement();
             stmt.executeUpdate(sentencia);
+            dao.close();
             return true;
         } catch (Exception e) {
             return false;
-        } finally {
-            try {
-                dao.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 }

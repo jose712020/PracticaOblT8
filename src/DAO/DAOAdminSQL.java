@@ -27,14 +27,9 @@ public class DAOAdminSQL implements DAOAdmin {
                     ));
                 }
             }
+            dao.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            try {
-                dao.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
         return lista;
     }
@@ -47,15 +42,10 @@ public class DAOAdminSQL implements DAOAdmin {
                     "', '" + admin.getNombre() + "', '" + admin.getClave() + "', '" + admin.getEmail() + "')";
             Statement stmt = dao.getConn().createStatement();
             stmt.executeUpdate(sentencia);
+            dao.close();
             return true;
         } catch (Exception e) {
             return false;
-        } finally {
-            try {
-                dao.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 }

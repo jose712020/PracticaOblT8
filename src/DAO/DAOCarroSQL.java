@@ -26,14 +26,9 @@ public class DAOCarroSQL implements DAOCarro{
                     listaId.add(rs.getInt("idProducto"));
                 }
             }
+            dao.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            try {
-                dao.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
 
         for (Producto p : daoProductoSQL.readAll(dao)) {
@@ -52,15 +47,10 @@ public class DAOCarroSQL implements DAOCarro{
                     "', '" + producto.getId() + "')";
             Statement stmt = dao.getConn().createStatement();
             stmt.executeUpdate(sentencia);
+            dao.close();
             return true;
         } catch (Exception e) {
             return false;
-        } finally {
-            try {
-                dao.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 
@@ -72,15 +62,10 @@ public class DAOCarroSQL implements DAOCarro{
                     producto.getId() + "' LIMIT 1";
             Statement stmt = dao.getConn().createStatement();
             stmt.executeUpdate(sentencia);
+            dao.close();
             return true;
         } catch (Exception e) {
             return false;
-        } finally {
-            try {
-                dao.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 
@@ -91,15 +76,10 @@ public class DAOCarroSQL implements DAOCarro{
             String sentencia = "DELETE FROM Carro WHERE `idCliente` = '" + cliente.getId() + "'";
             Statement stmt = dao.getConn().createStatement();
             stmt.executeUpdate(sentencia);
+            dao.close();
             return true;
         } catch (Exception e) {
             return false;
-        } finally {
-            try {
-                dao.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 }

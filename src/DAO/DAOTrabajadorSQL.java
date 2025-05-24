@@ -30,19 +30,13 @@ public class DAOTrabajadorSQL implements DAOTrabajador {
                     ));
                 }
             }
+            dao.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            try {
-                dao.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
 
         for (Trabajador t : lista) {
             t.setPedidosAsignados(daoPedidoSQL.readPedidosByIdTrabajador(dao, t));
-            //t.getPedidosAsignados().addAll(daoPedidoSQL.readPedidosByIdTrabajador(dao, t));
         }
 
         return lista;
@@ -57,15 +51,10 @@ public class DAOTrabajadorSQL implements DAOTrabajador {
                     trabajador.getEmail() + "', '" + trabajador.getMovil() + "')";
             Statement stmt = dao.getConn().createStatement();
             stmt.executeUpdate(sentencia);
+            dao.close();
             return true;
         } catch (Exception e) {
             return false;
-        } finally {
-            try {
-                dao.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 
@@ -78,15 +67,10 @@ public class DAOTrabajadorSQL implements DAOTrabajador {
                     + "' WHERE `Trabajador`.`id` = " + trabajador.getId();
             Statement stmt = dao.getConn().createStatement();
             stmt.executeUpdate(sentencia);
+            dao.close();
             return true;
         } catch (Exception e) {
             return false;
-        } finally {
-            try {
-                dao.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 
@@ -97,15 +81,10 @@ public class DAOTrabajadorSQL implements DAOTrabajador {
             String sentencia = "DELETE FROM Trabajador WHERE `Trabajador`.`id` = '" + trabajador.getId() + "'";
             Statement stmt = dao.getConn().createStatement();
             stmt.executeUpdate(sentencia);
+            dao.close();
             return true;
         } catch (Exception e) {
             return false;
-        } finally {
-            try {
-                dao.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 
@@ -127,15 +106,10 @@ public class DAOTrabajadorSQL implements DAOTrabajador {
                     );
                 }
             }
+            dao.close();
             return trabajador;
         } catch (Exception e) {
             return null;
-        } finally {
-            try {
-                dao.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 }
