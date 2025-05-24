@@ -6,11 +6,12 @@ import models.Trabajador;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
 public class DAOPedidoSQL implements DAOPedido {
-    private DAOPedidoProductosSQL daoPedidoProductos = new DAOPedidoProductosSQL();
+    private final DAOPedidoProductosSQL daoPedidoProductos = new DAOPedidoProductosSQL();
 
     @Override
     public ArrayList<Pedido> readAll(DAOManager dao) {
@@ -32,9 +33,14 @@ public class DAOPedidoSQL implements DAOPedido {
                     ));
                 }
             }
-            dao.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
+        } finally {
+            try {
+                dao.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         return pedidos;
@@ -50,10 +56,15 @@ public class DAOPedidoSQL implements DAOPedido {
                     "', '" + cliente.getId() + "')";
             Statement stmt = dao.getConn().createStatement();
             stmt.executeUpdate(sentencia);
-            dao.close();
             return true;
         } catch (Exception e) {
             return false;
+        } finally {
+            try {
+                dao.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -66,10 +77,15 @@ public class DAOPedidoSQL implements DAOPedido {
                     pedido.getComentario() + "' WHERE `Pedido`.`id` = " + pedido.getId();
             Statement stmt = dao.getConn().createStatement();
             stmt.executeUpdate(sentencia);
-            dao.close();
             return true;
         } catch (Exception e) {
             return false;
+        } finally {
+            try {
+                dao.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -81,10 +97,15 @@ public class DAOPedidoSQL implements DAOPedido {
                     "' WHERE `Pedido`.`id` = " + pedido.getId();
             Statement stmt = dao.getConn().createStatement();
             stmt.executeUpdate(sentencia);
-            dao.close();
             return true;
         } catch (Exception e) {
             return false;
+        } finally {
+            try {
+                dao.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -108,9 +129,14 @@ public class DAOPedidoSQL implements DAOPedido {
                     ));
                 }
             }
-            dao.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
+        } finally {
+            try {
+                dao.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return pedidos;
     }
@@ -135,36 +161,14 @@ public class DAOPedidoSQL implements DAOPedido {
                     ));
                 }
             }
-            dao.close();
         } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        return pedidos;
-    }
-
-    public ArrayList<Pedido> readTrabajadorNull(DAOManager dao) {
-        ArrayList<Pedido> pedidos = new ArrayList<>();
-        String sentencia = "SELECT * FROM Pedido WHERE `idTrabajador` is NULL";
-
-        try {
-            dao.open();
-            PreparedStatement ps = dao.getConn().prepareStatement(sentencia);
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    pedidos.add(new Pedido(
-                            rs.getInt("id"),
-                            rs.getDate("fechaPedido").toLocalDate(),
-                            rs.getDate("fechaEntregaEstimada").toLocalDate(),
-                            rs.getInt("estado"),
-                            rs.getString("comentario"),
-                            daoPedidoProductos.readAll(dao, rs.getInt("id"))
-                    ));
-                }
+            return pedidos;
+        } finally {
+            try {
+                dao.close();
+            } catch (SQLException e) {
+                return pedidos;
             }
-            dao.close();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
 
         return pedidos;

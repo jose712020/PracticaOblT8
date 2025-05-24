@@ -282,42 +282,293 @@ Inicio de sesión;root;Administrador;20-04-2025\17:48:30
 Inicio de sesión;root;Administrador;20-04-2025\17:49:02
 Inicio de sesión;root;Administrador;20-04-2025\17:53:27
 Inicio de sesión;root;Administrador;15-05-2025\11:53:23
-Inicio de sesión;root;Administrador;24-05-2025\11:51:18
-Cierre sesión;root;Administrador;24-05-2025\12:15:06
-Inicio de sesión;root;Administrador;24-05-2025\12:15:37
-Cierre sesión;root;Administrador;24-05-2025\12:27:58
-Inicio de sesión;cliente;Cliente;24-05-2025\12:28:04
-Cierre sesión;cliente;Cliente;24-05-2025\12:33:00
-Inicio de sesión;root;Administrador;24-05-2025\12:33:05
-Inicio de sesión;cliente;Cliente;24-05-2025\12:35:44
-Cierre sesión;cliente;Cliente;24-05-2025\12:35:59
-Inicio de sesión;root;Administrador;24-05-2025\12:36:05
-Inicio de sesión;root;Administrador;24-05-2025\12:39:03
-Inicio de sesión;root;Administrador;24-05-2025\12:44:33
-Cierre sesión;root;Administrador;24-05-2025\12:45:19
-Inicio de sesión;root;Administrador;24-05-2025\12:45:59
-Cierre sesión;root;Administrador;24-05-2025\12:46:22
-Inicio de sesión;root;Administrador;24-05-2025\12:46:30
-Cierre sesión;root;Administrador;24-05-2025\12:47:30
-Inicio de sesión;cliente;Cliente;24-05-2025\12:53:53
-Cierre sesión;cliente;Cliente;24-05-2025\12:54:22
-Inicio de sesión;root;Administrador;24-05-2025\12:54:28
-Cierre sesión;root;Administrador;24-05-2025\12:55:10
-Inicio de sesión;cliente;Cliente;24-05-2025\12:55:18
-Cierre sesión;cliente;Cliente;24-05-2025\12:55:52
-Inicio de sesión;3;Cliente;24-05-2025\12:55:59
-Cierre sesión;3;Cliente;24-05-2025\12:56:11
-Inicio de sesión;root;Administrador;24-05-2025\12:56:17
-Inicio de sesión;root;Administrador;24-05-2025\13:09:21
-Cierre sesión;root;Administrador;24-05-2025\13:11:17
-Inicio de sesión;trabajador;Trabajador;24-05-2025\13:11:30
-Actualiza pedido;655196;Enviado;24-05-2025\13:12:09
-Inicio de sesión;trabajador;Trabajador;24-05-2025\13:25:08
-Actualiza pedido;674742;Enviado;24-05-2025\13:25:31
-Inicio de sesión;root;Administrador;24-05-2025\13:36:09
-Actualiza pedido;651192;En preparación;24-05-2025\13:38:08
-Cierre sesión;root;Administrador;24-05-2025\13:39:21
-Inicio de sesión;cliente;Cliente;24-05-2025\13:39:29
-Inicio de sesión;hasta;Cliente;24-05-2025\13:45:56
-Cierre sesión;hasta;Cliente;24-05-2025\13:47:13
-Inicio de sesión;root;Administrador;24-05-2025\13:47:21
+Inicio de sesión;trabajador;Trabajador;23-05-2025\12:10:12
+Inicio de sesión;cliente;Cliente;23-05-2025\12:12:25
+Inicio de sesión;trabajador;Trabajador;23-05-2025\12:12:42
+Inicio de sesión;cliente;Cliente;23-05-2025\12:13:28
+Inicio de sesión;cliente;Cliente;23-05-2025\12:15:29
+Inicio de sesión;cliente;Cliente;23-05-2025\12:28:45
+Inicio de sesión;trabajador;Trabajador;23-05-2025\12:29:00
+Inicio de sesión;cliente;Cliente;23-05-2025\12:30:13
+Inicio de sesión;cliente;Cliente;23-05-2025\12:31:37
+Inicio de sesión;cliente;Cliente;23-05-2025\12:32:46
+Inicio de sesión;root;Administrador;23-05-2025\12:35:25
+Inicio de sesión;cliente;Cliente;23-05-2025\12:55:05
+Inicio de sesión;cliente;Cliente;23-05-2025\13:03:17
+Inicio de sesión;root;Administrador;23-05-2025\13:04:18
+Inicio de sesión;trabajador;Trabajador;23-05-2025\13:04:43
+Inicio de sesión;cliente;Cliente;23-05-2025\13:06:18
+Inicio de sesión;cliente;Cliente;23-05-2025\13:09:35
+Inicio de sesión;cliente;Cliente;23-05-2025\13:10:17
+Inicio de sesión;root;Administrador;23-05-2025\13:11:02
+Inicio de sesión;root;Administrador;23-05-2025\13:11:18
+Inicio de sesión;root;Administrador;23-05-2025\13:11:40
+Inicio de sesión;cliente;Cliente;23-05-2025\13:15:25
+Inicio de sesión;cliente;Cliente;23-05-2025\13:16:22
+Inicio de sesión;root;Administrador;23-05-2025\13:16:43
+Inicio de sesión;trabajador;Trabajador;23-05-2025\13:17:12
+Cierre sesión;trabajador;Trabajador;23-05-2025\13:17:22
+Inicio de sesión;cliente;Cliente;23-05-2025\13:17:30
+Inicio de sesión;cliente;Cliente;23-05-2025\13:23:36
+Cierre sesión;cliente;Cliente;23-05-2025\13:23:39
+Inicio de sesión;root;Administrador;23-05-2025\13:23:46
+Cierre sesión;root;Administrador;23-05-2025\13:23:52
+Inicio de sesión;trabajador;Trabajador;23-05-2025\13:24:02
+Inicio de sesión;root;Administrador;23-05-2025\13:36:02
+Inicio de sesión;cliente;Cliente;23-05-2025\13:41:20
+Cierre sesión;cliente;Cliente;23-05-2025\13:41:23
+Inicio de sesión;root;Administrador;23-05-2025\13:41:30
+Cierre sesión;root;Administrador;23-05-2025\13:41:32
+Inicio de sesión;trabajador;Trabajador;23-05-2025\13:41:43
+Inicio de sesión;cliente;Cliente;23-05-2025\13:45:07
+Cierre sesión;cliente;Cliente;23-05-2025\13:45:15
+Inicio de sesión;trabajador;Trabajador;23-05-2025\13:45:25
+Cierre sesión;trabajador;Trabajador;23-05-2025\13:45:27
+Inicio de sesión;root;Administrador;23-05-2025\13:45:37
+Cierre sesión;root;Administrador;23-05-2025\13:45:39
+Inicio de sesión;Jl;Cliente;23-05-2025\16:03:43
+Inicio de sesión;1;Cliente;23-05-2025\16:17:03
+Inicio de sesión;Jl2;Cliente;23-05-2025\16:18:54
+Inicio de sesión;root;Administrador;23-05-2025\16:19:32
+Inicio de sesión;root;Administrador;23-05-2025\16:21:59
+Inicio de sesión;trabajador;Trabajador;23-05-2025\16:28:49
+Cierre sesión;trabajador;Trabajador;23-05-2025\16:29:49
+Inicio de sesión;root;Administrador;23-05-2025\16:29:57
+Cierre sesión;root;Administrador;23-05-2025\16:30:14
+Inicio de sesión;trabajador;Trabajador;23-05-2025\16:32:50
+Cierre sesión;trabajador;Trabajador;23-05-2025\16:32:53
+Inicio de sesión;root;Administrador;23-05-2025\16:33:03
+Cierre sesión;root;Administrador;23-05-2025\16:33:24
+Inicio de sesión;root;Administrador;23-05-2025\16:34:17
+Inicio de sesión;Manule;Trabajador;23-05-2025\16:35:15
+Inicio de sesión;cliente;Cliente;23-05-2025\20:13:54
+Inicio de sesión;cliente;Cliente;23-05-2025\20:14:15
+Inicio de sesión;cliente;Cliente;23-05-2025\20:14:40
+Inicio de sesión;cliente;Cliente;23-05-2025\20:15:46
+Inicio de sesión;cliente;Cliente;23-05-2025\20:17:48
+Inicio de sesión;cliente;Cliente;23-05-2025\20:18:19
+Inicio de sesión;cliente;Cliente;23-05-2025\20:20:15
+Inicio de sesión;cliente;Cliente;23-05-2025\20:22:28
+Inicio de sesión;cliente;Cliente;23-05-2025\20:23:46
+Inicio de sesión;cliente;Cliente;23-05-2025\20:24:33
+Inicio de sesión;cliente;Cliente;23-05-2025\20:29:12
+Inicio de sesión;cliente;Cliente;23-05-2025\20:30:38
+Inicio de sesión;cliente;Cliente;23-05-2025\20:32:51
+Inicio de sesión;cliente;Cliente;23-05-2025\20:34:25
+Inicio de sesión;cliente;Cliente;23-05-2025\20:38:55
+Inicio de sesión;cliente;Cliente;23-05-2025\20:44:10
+Inicio de sesión;cliente;Cliente;23-05-2025\20:50:10
+Inicio de sesión;cliente;Cliente;23-05-2025\20:52:48
+Inicio de sesión;cliente;Cliente;23-05-2025\20:54:14
+Inicio de sesión;cliente;Cliente;23-05-2025\20:55:18
+Inicio de sesión;cliente;Cliente;23-05-2025\20:57:43
+Inicio de sesión;root;Administrador;23-05-2025\20:58:44
+Cierre sesión;root;Administrador;23-05-2025\20:59:35
+Inicio de sesión;trabajador;Trabajador;23-05-2025\20:59:46
+Cierre sesión;trabajador;Trabajador;23-05-2025\21:00:06
+Inicio de sesión;cliente;Cliente;23-05-2025\21:00:21
+Inicio de sesión;cliente;Cliente;23-05-2025\21:01:40
+Inicio de sesión;cliente;Cliente;23-05-2025\21:07:26
+Inicio de sesión;cliente;Cliente;23-05-2025\21:08:16
+Inicio de sesión;cliente;Cliente;23-05-2025\21:11:51
+Inicio de sesión;cliente;Cliente;23-05-2025\21:15:02
+Inicio de sesión;cliente;Cliente;23-05-2025\21:15:32
+Inicio de sesión;cliente;Cliente;23-05-2025\21:17:41
+Inicio de sesión;root;Administrador;23-05-2025\21:20:57
+Inicio de sesión;cliente;Cliente;23-05-2025\21:24:51
+Inicio de sesión;cliente;Cliente;23-05-2025\21:33:33
+Inicio de sesión;cliente;Cliente;23-05-2025\21:36:08
+Inicio de sesión;cliente;Cliente;23-05-2025\21:40:12
+Inicio de sesión;cliente;Cliente;23-05-2025\21:41:46
+Inicio de sesión;cliente;Cliente;23-05-2025\21:46:27
+Inicio de sesión;cliente;Cliente;23-05-2025\21:47:11
+Inicio de sesión;cliente;Cliente;23-05-2025\21:50:42
+Inicio de sesión;cliente;Cliente;23-05-2025\21:57:21
+Inicio de sesión;cliente;Cliente;23-05-2025\23:41:22
+Inicio de sesión;cliente;Cliente;23-05-2025\23:47:16
+Inicio de sesión;cliente;Cliente;23-05-2025\23:49:34
+Inicio de sesión;cliente;Cliente;24-05-2025\00:01:57
+Inicio de sesión;root;Administrador;24-05-2025\00:09:29
+Inicio de sesión;root;Administrador;24-05-2025\00:13:54
+Inicio de sesión;root;Administrador;24-05-2025\00:15:29
+Inicio de sesión;root;Administrador;24-05-2025\00:17:19
+Inicio de sesión;root;Administrador;24-05-2025\00:24:34
+Inicio de sesión;root;Administrador;24-05-2025\00:25:10
+Inicio de sesión;root;Administrador;24-05-2025\00:27:26
+Inicio de sesión;root;Administrador;24-05-2025\00:28:30
+Inicio de sesión;cliente;Cliente;24-05-2025\00:29:25
+Inicio de sesión;cliente;Cliente;24-05-2025\00:30:21
+Cierre sesión;cliente;Cliente;24-05-2025\00:30:50
+Inicio de sesión;root;Administrador;24-05-2025\00:30:59
+Inicio de sesión;root;Administrador;24-05-2025\00:34:35
+Cierre sesión;root;Administrador;24-05-2025\00:34:46
+Inicio de sesión;trabajador;Trabajador;24-05-2025\00:34:58
+Inicio de sesión;root;Administrador;24-05-2025\00:40:11
+Inicio de sesión;root;Administrador;24-05-2025\00:43:32
+Inicio de sesión;root;Administrador;24-05-2025\00:46:39
+Cierre sesión;root;Administrador;24-05-2025\00:47:05
+Inicio de sesión;1;Trabajador;24-05-2025\00:47:47
+Cierre sesión;1;Trabajador;24-05-2025\00:48:26
+Inicio de sesión;cliente;Cliente;24-05-2025\00:48:40
+Cierre sesión;cliente;Cliente;24-05-2025\00:48:59
+Inicio de sesión;root;Administrador;24-05-2025\00:49:14
+Inicio de sesión;root;Administrador;24-05-2025\00:50:15
+Inicio de sesión;root;Administrador;24-05-2025\10:50:30
+Inicio de sesión;root;Administrador;24-05-2025\10:58:21
+Inicio de sesión;root;Administrador;24-05-2025\11:01:01
+Inicio de sesión;cliente;Cliente;24-05-2025\11:03:15
+Cierre sesión;cliente;Cliente;24-05-2025\11:03:34
+Inicio de sesión;root;Administrador;24-05-2025\11:03:48
+Cierre sesión;root;Administrador;24-05-2025\11:04:02
+Inicio de sesión;trabajador;Trabajador;24-05-2025\11:04:15
+Inicio de sesión;root;Administrador;24-05-2025\11:06:04
+Inicio de sesión;root;Administrador;24-05-2025\11:07:36
+Cierre sesión;root;Administrador;24-05-2025\11:07:53
+Inicio de sesión;1;Trabajador;24-05-2025\11:08:01
+Cierre sesión;1;Trabajador;24-05-2025\11:08:04
+Inicio de sesión;cliente;Cliente;24-05-2025\11:08:12
+Cierre sesión;cliente;Cliente;24-05-2025\11:08:32
+Inicio de sesión;root;Administrador;24-05-2025\11:08:40
+Inicio de sesión;1;Trabajador;24-05-2025\11:11:09
+Inicio de sesión;1;Trabajador;24-05-2025\11:12:01
+Inicio de sesión;1;Trabajador;24-05-2025\11:16:35
+Inicio de sesión;1;Trabajador;24-05-2025\11:19:52
+Actualiza pedido;636096;Cancelado;24-05-2025\11:21:19
+Inicio de sesión;1;Trabajador;24-05-2025\11:28:00
+Actualiza pedido;636096;Cancelado;24-05-2025\11:28:09
+Inicio de sesión;cliente;Cliente;24-05-2025\11:29:57
+Inicio de sesión;cliente;Cliente;24-05-2025\11:30:17
+Inicio de sesión;cliente;Cliente;24-05-2025\11:31:15
+Cierre sesión;cliente;Cliente;24-05-2025\11:31:53
+Inicio de sesión;root;Administrador;24-05-2025\11:31:59
+Cierre sesión;root;Administrador;24-05-2025\11:33:46
+Inicio de sesión;cliente;Cliente;24-05-2025\11:33:55
+Cierre sesión;cliente;Cliente;24-05-2025\11:34:58
+Inicio de sesión;root;Administrador;24-05-2025\11:35:07
+Inicio de sesión;cliente;Cliente;24-05-2025\11:36:27
+Cierre sesión;cliente;Cliente;24-05-2025\11:37:33
+Cierre sesión;2;Cliente;24-05-2025\11:39:29
+Inicio de sesión;cliente;Cliente;24-05-2025\11:39:38
+Cierre sesión;cliente;Cliente;24-05-2025\11:40:10
+Inicio de sesión;root;Administrador;24-05-2025\11:40:17
+Inicio de sesión;root;Administrador;24-05-2025\11:40:54
+Inicio de sesión;root;Administrador;24-05-2025\11:41:58
+Inicio de sesión;root;Administrador;24-05-2025\11:43:24
+Inicio de sesión;root;Administrador;24-05-2025\11:43:54
+Inicio de sesión;root;Administrador;24-05-2025\12:15:39
+Inicio de sesión;root;Administrador;24-05-2025\12:16:43
+Inicio de sesión;root;Administrador;24-05-2025\12:16:58
+Inicio de sesión;root;Administrador;24-05-2025\12:36:55
+Inicio de sesión;root;Administrador;24-05-2025\12:44:05
+Inicio de sesión;root;Administrador;24-05-2025\12:46:34
+Inicio de sesión;root;Administrador;24-05-2025\12:47:02
+Inicio de sesión;root;Administrador;24-05-2025\12:48:31
+Inicio de sesión;root;Administrador;24-05-2025\12:49:57
+Inicio de sesión;root;Administrador;24-05-2025\12:50:24
+Inicio de sesión;root;Administrador;24-05-2025\12:51:00
+Inicio de sesión;root;Administrador;24-05-2025\12:56:46
+Inicio de sesión;root;Administrador;24-05-2025\13:06:23
+Inicio de sesión;root;Administrador;24-05-2025\13:10:00
+Inicio de sesión;root;Administrador;24-05-2025\13:12:41
+Inicio de sesión;root;Administrador;24-05-2025\13:14:39
+Inicio de sesión;root;Administrador;24-05-2025\13:15:40
+Inicio de sesión;root;Administrador;24-05-2025\13:16:30
+Inicio de sesión;root;Administrador;24-05-2025\13:17:34
+Inicio de sesión;root;Administrador;24-05-2025\13:19:16
+Inicio de sesión;root;Administrador;24-05-2025\13:23:12
+Inicio de sesión;root;Administrador;24-05-2025\13:25:44
+Inicio de sesión;root;Administrador;24-05-2025\13:28:24
+Inicio de sesión;cliente;Cliente;24-05-2025\13:29:47
+Cierre sesión;cliente;Cliente;24-05-2025\13:32:27
+Inicio de sesión;root;Administrador;24-05-2025\13:32:34
+Cierre sesión;root;Administrador;24-05-2025\13:32:56
+Inicio de sesión;cliente;Cliente;24-05-2025\13:33:12
+Cierre sesión;cliente;Cliente;24-05-2025\13:33:31
+Inicio de sesión;root;Administrador;24-05-2025\13:33:37
+Cierre sesión;root;Administrador;24-05-2025\13:33:57
+Inicio de sesión;3;Cliente;24-05-2025\13:34:35
+Cierre sesión;3;Cliente;24-05-2025\13:35:12
+Inicio de sesión;cliente;Cliente;24-05-2025\13:35:42
+Cierre sesión;cliente;Cliente;24-05-2025\13:36:14
+Inicio de sesión;root;Administrador;24-05-2025\13:36:22
+Inicio de sesión;root;Administrador;24-05-2025\13:37:57
+Inicio de sesión;root;Administrador;24-05-2025\13:57:55
+Inicio de sesión;root;Administrador;24-05-2025\14:04:55
+Inicio de sesión;root;Administrador;24-05-2025\14:08:24
+Inicio de sesión;root;Administrador;24-05-2025\14:18:56
+Inicio de sesión;root;Administrador;24-05-2025\14:22:35
+Inicio de sesión;root;Administrador;24-05-2025\14:23:30
+Inicio de sesión;root;Administrador;24-05-2025\14:34:56
+Inicio de sesión;root;Administrador;24-05-2025\16:44:27
+Inicio de sesión;root;Administrador;24-05-2025\16:45:46
+Inicio de sesión;cliente;Cliente;24-05-2025\16:47:14
+Inicio de sesión;cliente;Cliente;24-05-2025\16:48:54
+Inicio de sesión;root;Administrador;24-05-2025\16:49:29
+Inicio de sesión;root;Administrador;24-05-2025\16:55:11
+Inicio de sesión;cliente;Cliente;24-05-2025\17:09:29
+Cierre sesión;cliente;Cliente;24-05-2025\17:09:52
+Inicio de sesión;root;Administrador;24-05-2025\17:10:03
+Cierre sesión;root;Administrador;24-05-2025\17:10:45
+Cierre sesión;3;Cliente;24-05-2025\17:11:58
+Inicio de sesión;cliente;Cliente;24-05-2025\17:12:11
+Cierre sesión;cliente;Cliente;24-05-2025\17:12:42
+Inicio de sesión;root;Administrador;24-05-2025\17:12:51
+Inicio de sesión;root;Administrador;24-05-2025\17:14:08
+Inicio de sesión;root;Administrador;24-05-2025\17:23:15
+Inicio de sesión;cliente;Cliente;24-05-2025\17:29:12
+Cierre sesión;cliente;Cliente;24-05-2025\17:31:59
+Inicio de sesión;root;Administrador;24-05-2025\17:37:22
+Inicio de sesión;root;Administrador;24-05-2025\18:09:00
+Inicio de sesión;root;Administrador;24-05-2025\18:18:44
+Inicio de sesión;root;Administrador;24-05-2025\18:19:24
+Inicio de sesión;root;Administrador;24-05-2025\18:24:58
+Inicio de sesión;root;Administrador;24-05-2025\18:29:09
+Inicio de sesión;root;Administrador;24-05-2025\18:34:07
+Cierre sesión;root;Administrador;24-05-2025\18:34:14
+Inicio de sesión;3;Cliente;24-05-2025\18:34:23
+Inicio de sesión;cliente;Cliente;24-05-2025\18:35:50
+Inicio de sesión;cliente;Cliente;24-05-2025\18:37:09
+Inicio de sesión;root;Administrador;24-05-2025\18:48:30
+Inicio de sesión;root;Administrador;24-05-2025\18:48:51
+Cierre sesión;root;Administrador;24-05-2025\18:48:56
+Inicio de sesión;cliente;Cliente;24-05-2025\18:49:05
+Cierre sesión;cliente;Cliente;24-05-2025\18:49:27
+Inicio de sesión;root;Administrador;24-05-2025\18:49:33
+Cierre sesión;root;Administrador;24-05-2025\18:49:55
+Inicio de sesión;cliente;Cliente;24-05-2025\18:59:00
+Cierre sesión;cliente;Cliente;24-05-2025\18:59:27
+Inicio de sesión;root;Administrador;24-05-2025\18:59:37
+Inicio de sesión;root;Administrador;24-05-2025\19:00:42
+Inicio de sesión;root;Administrador;24-05-2025\19:03:56
+Inicio de sesión;root;Administrador;24-05-2025\19:04:48
+Inicio de sesión;root;Administrador;24-05-2025\19:05:25
+Inicio de sesión;cliente;Cliente;24-05-2025\19:14:58
+Cierre sesión;cliente;Cliente;24-05-2025\19:15:58
+Inicio de sesión;root;Administrador;24-05-2025\19:26:14
+Inicio de sesión;root;Administrador;24-05-2025\19:30:41
+Inicio de sesión;root;Administrador;24-05-2025\19:37:25
+Inicio de sesión;root;Administrador;24-05-2025\19:39:25
+Inicio de sesión;root;Administrador;24-05-2025\19:40:15
+Inicio de sesión;root;Administrador;24-05-2025\19:47:18
+Inicio de sesión;root;Administrador;24-05-2025\19:48:18
+Inicio de sesión;root;Administrador;24-05-2025\19:55:14
+Inicio de sesión;root;Administrador;24-05-2025\19:56:39
+Inicio de sesión;root;Administrador;24-05-2025\20:00:27
+Inicio de sesión;2;Cliente;24-05-2025\20:11:34
+Cierre sesión;2;Cliente;24-05-2025\20:11:55
+Inicio de sesión;root;Administrador;24-05-2025\20:12:01
+Cierre sesión;root;Administrador;24-05-2025\20:12:41
+Inicio de sesión;cliente;Cliente;24-05-2025\20:12:49
+Cierre sesión;cliente;Cliente;24-05-2025\20:13:25
+Inicio de sesión;2;Cliente;24-05-2025\20:13:48
+Inicio de sesión;root;Administrador;24-05-2025\20:16:41
+Inicio de sesión;2;Cliente;24-05-2025\20:18:07
+Cierre sesión;2;Cliente;24-05-2025\20:18:25
+Inicio de sesión;root;Administrador;24-05-2025\20:18:32
+Inicio de sesión;cliente;Cliente;24-05-2025\20:50:00
+Cierre sesión;cliente;Cliente;24-05-2025\20:51:11
+Inicio de sesión;root;Administrador;24-05-2025\20:51:19
+Inicio de sesión;cliente;Cliente;24-05-2025\20:56:30
+Cierre sesión;cliente;Cliente;24-05-2025\20:57:15
+Inicio de sesión;root;Administrador;24-05-2025\20:57:25
+Inicio de sesión;root;Administrador;24-05-2025\21:03:18

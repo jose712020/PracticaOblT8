@@ -9,7 +9,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class DAOTrabajadorSQL implements DAOTrabajador {
-    private DAOPedidoSQL daoPedidoSQL = new DAOPedidoSQL();
+    private final DAOPedidoSQL daoPedidoSQL = new DAOPedidoSQL();
+
     @Override
     public ArrayList<Trabajador> readAll(DAOManager dao) {
         ArrayList<Trabajador> lista = new ArrayList<>();
@@ -29,13 +30,21 @@ public class DAOTrabajadorSQL implements DAOTrabajador {
                     ));
                 }
             }
-            dao.close();
-            for (Trabajador t : lista) {
-                t.setPedidosAsignados(daoPedidoSQL.readPedidosByIdTrabajador(dao, t));
-            }
         } catch (Exception e) {
             throw new RuntimeException(e);
+        } finally {
+            try {
+                dao.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
+
+        for (Trabajador t : lista) {
+            t.setPedidosAsignados(daoPedidoSQL.readPedidosByIdTrabajador(dao, t));
+            //t.getPedidosAsignados().addAll(daoPedidoSQL.readPedidosByIdTrabajador(dao, t));
+        }
+
         return lista;
     }
 
@@ -48,10 +57,15 @@ public class DAOTrabajadorSQL implements DAOTrabajador {
                     trabajador.getEmail() + "', '" + trabajador.getMovil() + "')";
             Statement stmt = dao.getConn().createStatement();
             stmt.executeUpdate(sentencia);
-            dao.close();
             return true;
         } catch (Exception e) {
             return false;
+        } finally {
+            try {
+                dao.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -64,10 +78,15 @@ public class DAOTrabajadorSQL implements DAOTrabajador {
                     + "' WHERE `Trabajador`.`id` = " + trabajador.getId();
             Statement stmt = dao.getConn().createStatement();
             stmt.executeUpdate(sentencia);
-            dao.close();
             return true;
         } catch (Exception e) {
             return false;
+        } finally {
+            try {
+                dao.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -78,10 +97,15 @@ public class DAOTrabajadorSQL implements DAOTrabajador {
             String sentencia = "DELETE FROM Trabajador WHERE `Trabajador`.`id` = '" + trabajador.getId() + "'";
             Statement stmt = dao.getConn().createStatement();
             stmt.executeUpdate(sentencia);
-            dao.close();
             return true;
         } catch (Exception e) {
             return false;
+        } finally {
+            try {
+                dao.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -92,7 +116,7 @@ public class DAOTrabajadorSQL implements DAOTrabajador {
             Trabajador trabajador = null;
             String sentencia = "SELECT * FROM `Trabajador` WHERE `Trabajador`.`id` = '" + 100000 + "'";
             PreparedStatement ps = dao.getConn().prepareStatement(sentencia);
-            try (ResultSet rs = ps.executeQuery()){
+            try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     trabajador = new Trabajador(
                             rs.getInt("id"),
@@ -103,10 +127,15 @@ public class DAOTrabajadorSQL implements DAOTrabajador {
                     );
                 }
             }
-            dao.close();
             return trabajador;
         } catch (Exception e) {
             return null;
+        } finally {
+            try {
+                dao.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

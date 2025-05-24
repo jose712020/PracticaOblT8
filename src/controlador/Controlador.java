@@ -154,7 +154,7 @@ public class Controlador implements Serializable {
         Pedido pedidoTemp = new Pedido(generaIdPedido(), LocalDate.now(), LocalDate.now().plusDays(5),
                 "Pedido creado", copiaCarro);
 
-        //temp.addPedido(pedidoTemp);
+        temp.addPedido(pedidoTemp);
         daoPedidoSQL.insert(dao, pedidoTemp, temp);
         daoPedidoProductosSQL.insert(dao, pedidoTemp);
         Persistencia.guardaResumenPedido(pedidoTemp);
@@ -183,24 +183,27 @@ public class Controlador implements Serializable {
 
     // Metodo que busca un trabajador candidato para asignar un pedido
     public Trabajador buscaTrabajadorCandidatoParaAsignar() {
+        ArrayList<Trabajador> trabajadores = getTrabajadores();
         int numPedidosMinimo = Integer.MAX_VALUE;
         Trabajador candidato = null;
 
 
-        for (Trabajador t : getTrabajadores()) {
+        for (Trabajador t : trabajadores) {
             if (t.numPedidosPendientes() < numPedidosMinimo) {
                 numPedidosMinimo = t.numPedidosPendientes();
                 candidato = t;
             }
         }
 
-        if (getTrabajadores().size() > 1) if (hayEmpateTrabajadoresCandidatos(candidato)) return null;
+        if (trabajadores.size() > 1) if (hayEmpateTrabajadoresCandidatos(candidato)) return null;
         return candidato;
     }
 
     // Metodo que mira si hay empate en los pedidos pendientes de los trabajadores
     public boolean hayEmpateTrabajadoresCandidatos(Trabajador candidato) {
-        for (Trabajador t : getTrabajadores()) {
+        ArrayList<Trabajador> trabajadores = getTrabajadores();
+
+        for (Trabajador t : trabajadores) {
             if (t.getId() != candidato.getId())
                 if (t.getPedidosPendientes().size() == candidato.getPedidosPendientes().size()) return true;
         }
@@ -304,7 +307,8 @@ public class Controlador implements Serializable {
         int cont = 0;
 
         for (Cliente c : getClientes()) {
-            if (c.getPedidos() != null) cont += c.getPedidos().size();
+            ArrayList<Pedido> pedidosCliente = c.getPedidos();
+            if (!pedidosCliente.isEmpty()) cont += pedidosCliente.size();
         }
         return cont;
     }
@@ -334,10 +338,12 @@ public class Controlador implements Serializable {
     // Funcion que saca un cliente de un pedido
     private Cliente sacaClienteDeUnPedido(int idPedido) {
         for (Cliente c : getClientes()) {
-            if (c != null && !c.getPedidos().isEmpty()) {
-                for (Pedido p : c.getPedidos()) {
-                    if (p.getId() == idPedido) return c;
-                }
+            if (c != null) {
+                ArrayList<Pedido> pedidosCliente = c.getPedidos();
+                if (!pedidosCliente.isEmpty())
+                    for (Pedido p : pedidosCliente) {
+                        if (p.getId() == idPedido) return c;
+                    }
             }
         }
         return null;
@@ -345,14 +351,14 @@ public class Controlador implements Serializable {
 
     // Funcion que le manda un correo a un trabajador
     private void enviaCorreoPedidoModificadoTrabajador(Pedido pedido) {
-        if (!getTrabajadores().isEmpty()) {
-            for (Trabajador t : getTrabajadores()) {
+        ArrayList<Trabajador> trabajadores = getTrabajadores();
+        if (!getTrabajadores().isEmpty())
+            for (Trabajador t : trabajadores) {
                 for (PedidoClienteDataClass p : getPedidosAsignadosTrabajador(t.getId())) {
                     if (pedido.getId() == p.getIdPedido())
                         Comunicaciones.enviaCorreoCambiaEstadoPedidoTrabajador(t.getEmail(), "PEDIDO MODIFICADO", p);
                 }
             }
-        }
     }
 
     // Metodo que añade un trabajador a trabajadores
@@ -395,9 +401,11 @@ public class Controlador implements Serializable {
 
     // Metodo que busca un trabajador en un pedido asignado
     public Trabajador buscaTrabajadorAsignadoAPedido(int idPedido) {
-        if (getTrabajadores().isEmpty()) return null;
+        ArrayList<Trabajador> trabajadores = getTrabajadores();
 
-        for (Trabajador t : getTrabajadores()) {
+        if (trabajadores.isEmpty()) return null;
+
+        for (Trabajador t : trabajadores) {
             for (Pedido p : t.getPedidosAsignados()) {
                 if (p.getId() == idPedido) return t;
             }
@@ -408,21 +416,23 @@ public class Controlador implements Serializable {
 
     // Metodo que devuelve los pedidos que no tienen el trabajador
     public ArrayList<Pedido> pedidosSinTrabajador() {
+        ArrayList<Pedido> pedidos = new ArrayList<>();
+        ArrayList<Cliente> clientes = getClientes();
 
-
-        /*if (!getTrabajadores().isEmpty()) {
-            for (Cliente c : getClientes()) {
-                for (Pedido p : c.getPedidos()) {
+        if (!getTrabajadores().isEmpty()) {
+            for (Cliente c : clientes) {
+                ArrayList<Pedido> pedidosCliente = c.getPedidos();
+                for (Pedido p : pedidosCliente) {
                     if (buscaTrabajadorAsignadoAPedido(p.getId()) == null) pedidos.add(p);
                 }
             }
         } else {
-            for (Cliente c : getClientes()) {
+            for (Cliente c : clientes) {
                 pedidos.addAll(c.getPedidos());
             }
-        }*/
+        }
 
-        return daoPedidoSQL.readTrabajadorNull(dao);
+        return pedidos;
     }
 
     // Metodo que muestra el numero de pedidos sin el trabajador
@@ -455,24 +465,42 @@ public class Controlador implements Serializable {
     // Metodo que devuelve los pedidos asignados del trabajador
     public ArrayList<PedidoClienteDataClass> getPedidosAsignadosTrabajador(int idTrabajador) {
         ArrayList<PedidoClienteDataClass> pedidosAsignadosT = new ArrayList<>();
+        ArrayList<Cliente> clientes = getClientes();
 
         Trabajador temp = buscaTrabajadorById(idTrabajador);
+        ArrayList<Pedido> pedidosTrabajador = temp.getPedidosPendientes();
 
-        //Bucle que mira los pedidos completados de los trabajadores
-        for (Pedido pT : temp.getPedidosPendientes()) {
-            // Bucle del cliente
-            for (Cliente c : getClientes()) {
-                // Bucle que mira los pedidos de los clientes
-                for (Pedido pA : c.getPedidos()) {
-                    if (pA.getId() == pT.getId()) {
-                        pedidosAsignadosT.add(new PedidoClienteDataClass(c.getId(), c.getEmail(), c.getNombre(), c.getLocalidad(),
-                                c.getProvincia(), c.getDireccion(), c.getMovil(), pA.getId(), pA.getFechaPedido(), pA.getFechaEntregaEstimada(),
-                                pA.getEstado(), pA.getComentario(), pA.getProductos()));
-
+        for (Cliente c : clientes) {
+            ArrayList<Pedido> pedidosCliente = c.getPedidos();
+            for (Pedido pT : pedidosTrabajador) {
+                for (Pedido pC : pedidosCliente) {
+                    if (pC.getId() == pT.getId()) {
+                        pedidosAsignadosT.add(new PedidoClienteDataClass(
+                                c.getId(), c.getEmail(), c.getNombre(), c.getLocalidad(),
+                                c.getProvincia(), c.getDireccion(), c.getMovil(), pT.getId(), pT.getFechaPedido(),
+                                pT.getFechaEntregaEstimada(), pT.getEstado(), pT.getComentario(), pT.getProductos()));
+                        break;
                     }
                 }
             }
         }
+
+        //Bucle que mira los pedidos completados de los trabajadores
+//        for (Pedido pT : temp.getPedidosPendientes()) {
+//            // Bucle del cliente
+//            for (Cliente c : clientes) {
+//                ArrayList<Pedido> pedidosCliente = c.getPedidos();
+//                // Bucle que mira los pedidos de los clientes
+//                for (Pedido pA : pedidosCliente) {
+//                    if (pA.getId() == pT.getId()) {
+//                        pedidosAsignadosT.add(new PedidoClienteDataClass(c.getId(), c.getEmail(), c.getNombre(), c.getLocalidad(),
+//                                c.getProvincia(), c.getDireccion(), c.getMovil(), pA.getId(), pA.getFechaPedido(), pA.getFechaEntregaEstimada(),
+//                                pA.getEstado(), pA.getComentario(), pA.getProductos()));
+//
+//                    }
+//                }
+//            }
+//        }
         Collections.sort(pedidosAsignadosT);
         return pedidosAsignadosT;
     }
@@ -508,13 +536,15 @@ public class Controlador implements Serializable {
         Trabajador temp = buscaTrabajadorById(idTrabajador);
         if (temp == null) return null;
         if (temp.getPedidosAsignados().isEmpty()) return pedidosCompletadosT;
+        ArrayList<Cliente> clientes = getClientes();
 
         //Bucle que mira los pedidos completados de los trabajadores
         for (Pedido pT : temp.getPedidosCompletados()) {
             // Bucle del cliente
-            for (Cliente c : getClientes()) {
+            for (Cliente c : clientes) {
+                ArrayList<Pedido> pedidosCliente = c.getPedidos();
                 // Bucle que mira los pedidos de los clientes
-                for (Pedido pC : c.getPedidos()) {
+                for (Pedido pC : pedidosCliente) {
                     if (pC.getId() == pT.getId()) {
                         pedidosCompletadosT.add(new PedidoClienteDataClass(c.getId(), c.getEmail(), c.getNombre(), c.getLocalidad(),
                                 c.getProvincia(), c.getDireccion(), c.getMovil(), pC.getId(), pC.getFechaPedido(), pC.getFechaEntregaEstimada(),
@@ -523,7 +553,6 @@ public class Controlador implements Serializable {
                 }
             }
         }
-
 
         Collections.sort(pedidosCompletadosT);
         return pedidosCompletadosT;
@@ -774,10 +803,12 @@ public class Controlador implements Serializable {
         ArrayList<Pedido> pedidosCancelados = new ArrayList<>();
 
         for (Cliente c : getClientes()) {
-            if (c != null && !c.getPedidos().isEmpty()) {
-                for (Pedido p : c.getPedidos()) {
-                    if (p.getEstado() == 4) pedidosCancelados.add(p);
-                }
+            if (c != null) {
+                ArrayList<Pedido> pedidosCliente = c.getPedidos();
+                if (!pedidosCliente.isEmpty())
+                    for (Pedido p : pedidosCliente) {
+                        if (p.getEstado() == 4) pedidosCancelados.add(p);
+                    }
             }
         }
 
@@ -790,11 +821,11 @@ public class Controlador implements Serializable {
         ArrayList<Pedido> pedidosPendientes = new ArrayList<>();
 
         for (Cliente c : getClientes()) {
-            if (c != null && !c.getPedidos().isEmpty()) {
-                for (Pedido p : c.getPedidos()) {
+            ArrayList<Pedido> pedidosCliente = c.getPedidos();
+            if (!pedidosCliente.isEmpty())
+                for (Pedido p : pedidosCliente) {
                     if (p.getEstado() == 0 || p.getEstado() == 1 || p.getEstado() == 2) pedidosPendientes.add(p);
                 }
-            }
         }
 
         Collections.sort(pedidosPendientes);
@@ -986,10 +1017,12 @@ public class Controlador implements Serializable {
     // Metodo que devuelve todos los pedidos que haya sin gestionar por ningún admin ni trabajador
     public ArrayList<Pedido> getTodosPedidosSinGestionar() {
         ArrayList<Pedido> pedidos = new ArrayList<>();
+        ArrayList<Cliente> clientes = getClientes();
 
-        for (Cliente c : getClientes()) {
-            if (!c.getPedidos().isEmpty()) {
-                for (Pedido p : c.getPedidos()) {
+        for (Cliente c : clientes) {
+            ArrayList<Pedido> pedidosCliente = c.getPedidos();
+            if (!pedidosCliente.isEmpty()) {
+                for (Pedido p : pedidosCliente) {
                     if (p.getEstado() != 2 && p.getEstado() != 3) pedidos.add(p);
                 }
             }

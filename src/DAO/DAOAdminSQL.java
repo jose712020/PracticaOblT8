@@ -4,6 +4,7 @@ import models.Admin;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -16,19 +17,24 @@ public class DAOAdminSQL implements DAOAdmin {
         try {
             dao.open();
             PreparedStatement ps = dao.getConn().prepareStatement(sentencia);
-            try (ResultSet rs = ps.executeQuery()){
-               while (rs.next()) {
-                   lista.add(new Admin(
-                           rs.getInt("id"),
-                           rs.getString("nombre"),
-                           rs.getString("clave"),
-                           rs.getString("email")
-                   ));
-               }
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    lista.add(new Admin(
+                            rs.getInt("id"),
+                            rs.getString("nombre"),
+                            rs.getString("clave"),
+                            rs.getString("email")
+                    ));
+                }
             }
-            dao.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
+        } finally {
+            try {
+                dao.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return lista;
     }
@@ -41,10 +47,15 @@ public class DAOAdminSQL implements DAOAdmin {
                     "', '" + admin.getNombre() + "', '" + admin.getClave() + "', '" + admin.getEmail() + "')";
             Statement stmt = dao.getConn().createStatement();
             stmt.executeUpdate(sentencia);
-            dao.close();
             return true;
         } catch (Exception e) {
             return false;
+        } finally {
+            try {
+                dao.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }
