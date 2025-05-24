@@ -24,11 +24,9 @@ public class DAOAdminSQL implements DAOAdmin {
                            rs.getString("clave"),
                            rs.getString("email")
                    ));
-                }
-                dao.close();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+               }
             }
+            dao.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

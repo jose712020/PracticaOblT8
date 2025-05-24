@@ -154,7 +154,7 @@ public class Controlador implements Serializable {
         Pedido pedidoTemp = new Pedido(generaIdPedido(), LocalDate.now(), LocalDate.now().plusDays(5),
                 "Pedido creado", copiaCarro);
 
-        temp.addPedido(pedidoTemp);
+        //temp.addPedido(pedidoTemp);
         daoPedidoSQL.insert(dao, pedidoTemp, temp);
         daoPedidoProductosSQL.insert(dao, pedidoTemp);
         Persistencia.guardaResumenPedido(pedidoTemp);
@@ -408,9 +408,9 @@ public class Controlador implements Serializable {
 
     // Metodo que devuelve los pedidos que no tienen el trabajador
     public ArrayList<Pedido> pedidosSinTrabajador() {
-        ArrayList<Pedido> pedidos = new ArrayList<>();
 
-        if (!getTrabajadores().isEmpty()) {
+
+        /*if (!getTrabajadores().isEmpty()) {
             for (Cliente c : getClientes()) {
                 for (Pedido p : c.getPedidos()) {
                     if (buscaTrabajadorAsignadoAPedido(p.getId()) == null) pedidos.add(p);
@@ -420,9 +420,9 @@ public class Controlador implements Serializable {
             for (Cliente c : getClientes()) {
                 pedidos.addAll(c.getPedidos());
             }
-        }
+        }*/
 
-        return pedidos;
+        return daoPedidoSQL.readTrabajadorNull(dao);
     }
 
     // Metodo que muestra el numero de pedidos sin el trabajador

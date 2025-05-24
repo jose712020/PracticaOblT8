@@ -142,4 +142,31 @@ public class DAOPedidoSQL implements DAOPedido {
 
         return pedidos;
     }
+
+    public ArrayList<Pedido> readTrabajadorNull(DAOManager dao) {
+        ArrayList<Pedido> pedidos = new ArrayList<>();
+        String sentencia = "SELECT * FROM Pedido WHERE `idTrabajador` is NULL";
+
+        try {
+            dao.open();
+            PreparedStatement ps = dao.getConn().prepareStatement(sentencia);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    pedidos.add(new Pedido(
+                            rs.getInt("id"),
+                            rs.getDate("fechaPedido").toLocalDate(),
+                            rs.getDate("fechaEntregaEstimada").toLocalDate(),
+                            rs.getInt("estado"),
+                            rs.getString("comentario"),
+                            daoPedidoProductos.readAll(dao, rs.getInt("id"))
+                    ));
+                }
+            }
+            dao.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return pedidos;
+    }
 }

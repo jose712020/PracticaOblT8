@@ -7,8 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
-
 public class DAOPedidoProductosSQL implements DAOPedidoProductos {
     private DAOProductoSQL daoProducto = new DAOProductoSQL();
 

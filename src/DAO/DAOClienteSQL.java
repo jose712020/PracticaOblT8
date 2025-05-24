@@ -4,13 +4,11 @@ import models.Cliente;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
 public class DAOClienteSQL implements DAOCliente{
-    private DAOPedidoSQL daoPedidoSQL = new DAOPedidoSQL();
-    private DAOCarroSQL daoCarroSQL = new DAOCarroSQL();
-
     @Override
     public ArrayList<Cliente> readAll(DAOManager dao) {
         ArrayList<Cliente> clientes = new ArrayList<>();
@@ -34,12 +32,8 @@ public class DAOClienteSQL implements DAOCliente{
                             rs.getBoolean("isValid")
                     ));
                 }
-                dao.close();
-                for (Cliente c : clientes) {
-                    c.setPedidos(daoPedidoSQL.readPedidosByIdCliente(dao, c));
-                    c.setCarro(daoCarroSQL.readAll(dao, c));
-                }
             }
+            dao.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

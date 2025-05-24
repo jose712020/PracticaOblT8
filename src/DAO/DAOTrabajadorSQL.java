@@ -28,8 +28,8 @@ public class DAOTrabajadorSQL implements DAOTrabajador {
                             rs.getInt("movil")
                     ));
                 }
-                dao.close();
             }
+            dao.close();
             for (Trabajador t : lista) {
                 t.setPedidosAsignados(daoPedidoSQL.readPedidosByIdTrabajador(dao, t));
             }

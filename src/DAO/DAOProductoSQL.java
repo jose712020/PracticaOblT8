@@ -28,8 +28,8 @@ public class DAOProductoSQL implements DAOProducto {
                             rs.getInt("relevancia")
                     ));
                 }
-                dao.close();
             }
+            dao.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
