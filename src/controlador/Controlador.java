@@ -303,10 +303,10 @@ public class Controlador implements Serializable {
     }
 
     // Metodo que cuenta los pedidos totales
-    public int numPedidosTotales() {
+    public int numPedidosTotales(ArrayList<Cliente> clientes) {
         int cont = 0;
 
-        for (Cliente c : getClientes()) {
+        for (Cliente c : clientes) {
             ArrayList<Pedido> pedidosCliente = c.getPedidos();
             if (!pedidosCliente.isEmpty()) cont += pedidosCliente.size();
         }
@@ -400,17 +400,12 @@ public class Controlador implements Serializable {
     }
 
     // Metodo que busca un trabajador en un pedido asignado
-    public Trabajador buscaTrabajadorAsignadoAPedido(int idPedido) {
-        ArrayList<Trabajador> trabajadores = getTrabajadores();
-
-        if (trabajadores.isEmpty()) return null;
-
+    public Trabajador buscaTrabajadorAsignadoAPedido(int idPedido, ArrayList<Trabajador> trabajadores) {
         for (Trabajador t : trabajadores) {
             for (Pedido p : t.getPedidosAsignados()) {
                 if (p.getId() == idPedido) return t;
             }
         }
-
         return null;
     }
 
@@ -418,12 +413,13 @@ public class Controlador implements Serializable {
     public ArrayList<Pedido> pedidosSinTrabajador() {
         ArrayList<Pedido> pedidos = new ArrayList<>();
         ArrayList<Cliente> clientes = getClientes();
+        ArrayList<Trabajador> trabajadores = getTrabajadores();
 
-        if (!getTrabajadores().isEmpty()) {
+        if (!trabajadores.isEmpty()) {
             for (Cliente c : clientes) {
                 ArrayList<Pedido> pedidosCliente = c.getPedidos();
                 for (Pedido p : pedidosCliente) {
-                    if (buscaTrabajadorAsignadoAPedido(p.getId()) == null) pedidos.add(p);
+                    if (buscaTrabajadorAsignadoAPedido(p.getId(), trabajadores) == null) pedidos.add(p);
                 }
             }
         } else {
@@ -709,18 +705,18 @@ public class Controlador implements Serializable {
     }
 
     // Metodo que devuelve el numero de pedidos pendientes (estado: en preparacion, enviado o creado)
-    public int numPedidosPendientes() {
+    public int numPedidosPendientes(ArrayList<Trabajador> trabajadores) {
         int cont = 0;
-        for (Trabajador t : getTrabajadores()) {
+        for (Trabajador t : trabajadores) {
             if (!t.getPedidosPendientes().isEmpty()) cont += t.getPedidosPendientes().size();
         }
         return cont;
     }
 
     // Metodo que devuelve el numero de pedidos pendientes (estado: entregado o cancelado)
-    public int numPedidosCompletadosCancelados() {
+    public int numPedidosCompletadosCancelados(ArrayList<Trabajador> trabajadores) {
         int cont = 0;
-        for (Trabajador t : getTrabajadores()) {
+        for (Trabajador t : trabajadores) {
             if (!t.getPedidosCompletados().isEmpty()) cont += t.getPedidosCompletados().size();
         }
         return cont;

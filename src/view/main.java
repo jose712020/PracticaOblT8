@@ -1130,9 +1130,11 @@ public class main {
 
     // Función que da a elegir como se quiere dar de baja al Trabajador, si mediante su ID o en un menú de selección
     private static void bajaTrabajador(Controlador controlador) {
-        if (controlador.getTrabajadores().isEmpty()) System.out.println("No hay trabajadores para dar de baja...");
+        ArrayList<Trabajador> trabajadores = controlador.getTrabajadores();
+
+        if (trabajadores.isEmpty()) System.out.println("No hay trabajadores para dar de baja...");
         else {
-            Trabajador temp = eligeTrabajadorByMenu(controlador);
+            Trabajador temp = eligeTrabajadorByMenu(controlador, trabajadores);
 
             if (temp == null) System.out.println("No se ha encontrado ningún trabajador...");
             else {
@@ -1171,8 +1173,7 @@ public class main {
     }
 
     // Función que elimina un trabajador mediante un menú de selección
-    private static Trabajador eligeTrabajadorByMenu(Controlador controlador) {
-        ArrayList<Trabajador> trabajadores = controlador.getTrabajadores();
+    private static Trabajador eligeTrabajadorByMenu(Controlador controlador, ArrayList<Trabajador> trabajadores) {
         int eligeTrabajador = -1, cont = 1;
 
         for (Trabajador t : trabajadores) {
@@ -1266,8 +1267,9 @@ public class main {
                         ║ Número de pedidos completados o cancelados:%4d    ║
                         ║ Número de pedidos sin asignar:%4d                 ║
                         ╚════════════════════════════════════════════════════╝
-                        """, clientes.size(), trabajadores.size(), controlador.numPedidosTotales(),
-                controlador.numPedidosPendientes(), controlador.numPedidosCompletadosCancelados(), numPedidosSinTrabajador);
+                        """, clientes.size(), trabajadores.size(), controlador.numPedidosTotales(clientes),
+                controlador.numPedidosPendientes(trabajadores), controlador.numPedidosCompletadosCancelados(trabajadores),
+                numPedidosSinTrabajador);
     }
 
     // Función que pide los datos para crear un nuevo trabajador
