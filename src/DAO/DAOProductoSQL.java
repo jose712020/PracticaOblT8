@@ -2,13 +2,14 @@ package DAO;
 
 import models.Producto;
 
+import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class DAOProductoSQL implements DAOProducto {
+public class DAOProductoSQL implements DAOProducto, Serializable {
     @Override
     public ArrayList<Producto> readAll(DAOManager dao) {
         ArrayList<Producto> lista = new ArrayList<>();

@@ -2,13 +2,14 @@ package DAO;
 
 import models.Trabajador;
 
+import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class DAOTrabajadorSQL implements DAOTrabajador {
+public class DAOTrabajadorSQL implements DAOTrabajador, Serializable {
     private final DAOPedidoSQL daoPedidoSQL = new DAOPedidoSQL();
 
     @Override

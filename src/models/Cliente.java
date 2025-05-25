@@ -3,7 +3,6 @@ package models;
 import DAO.DAOCarroSQL;
 import DAO.DAOManager;
 import DAO.DAOPedidoSQL;
-import controlador.Controlador;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -22,9 +21,9 @@ public class Cliente implements Serializable {
     private boolean isValid;
     private ArrayList<Pedido> pedidos;
     private ArrayList<Producto> carro;
-    private DAOManager dao = DAOManager.getSinglentonInstance();
-    private DAOCarroSQL daoCarroSQL = new DAOCarroSQL();
-    private DAOPedidoSQL daoPedidoSQL = new DAOPedidoSQL();
+    private transient DAOManager dao = DAOManager.getSinglentonInstance();
+    private transient DAOCarroSQL daoCarroSQL = new DAOCarroSQL();
+    private transient DAOPedidoSQL daoPedidoSQL = new DAOPedidoSQL();
 
     //Constructor
     public Cliente(int id, String email, String clave, String nombre, String localidad, String provincia, String direccion, int movil) {
@@ -227,4 +226,20 @@ public class Cliente implements Serializable {
         }
         return false;
     }
+
+    public void inicializarDao() {
+        dao = DAOManager.getSinglentonInstance();
+        daoCarroSQL = new DAOCarroSQL();
+        daoPedidoSQL = new DAOPedidoSQL();
+    }
+
+    public ArrayList<Pedido> pedidosRam() {
+        return pedidos;
+    }
+
+    public ArrayList<Producto> carroRam() {
+        return carro;
+    }
+
+
 }

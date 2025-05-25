@@ -162,7 +162,9 @@ public class Controlador implements Serializable {
         temp.vaciaCarro();
         daoCarroSQL.deleteAll(dao, temp);
         //Persistencia.guardaClienteEnDisco(temp);
-        Trabajador trabajadorTemp = buscaTrabajadorCandidatoParaAsignar();
+        Trabajador trabajadorTemp;
+        //do {
+        trabajadorTemp = buscaTrabajadorCandidatoParaAsignar();
 
         if (trabajadorTemp != null) {
             if (asignaPedido(pedidoTemp.getId(), trabajadorTemp.getId())) {
@@ -178,6 +180,8 @@ public class Controlador implements Serializable {
                 Comunicaciones.enviaMensajeTelegramTrabajador(trabajadorTemp.getNombre() + " se te ha asignado el pedido: " + pedidoTemp.getId());
             }
         }
+        //} while (trabajadorTemp != null);
+
         return true;
     }
 
@@ -480,23 +484,6 @@ public class Controlador implements Serializable {
                 }
             }
         }
-
-        //Bucle que mira los pedidos completados de los trabajadores
-//        for (Pedido pT : temp.getPedidosPendientes()) {
-//            // Bucle del cliente
-//            for (Cliente c : clientes) {
-//                ArrayList<Pedido> pedidosCliente = c.getPedidos();
-//                // Bucle que mira los pedidos de los clientes
-//                for (Pedido pA : pedidosCliente) {
-//                    if (pA.getId() == pT.getId()) {
-//                        pedidosAsignadosT.add(new PedidoClienteDataClass(c.getId(), c.getEmail(), c.getNombre(), c.getLocalidad(),
-//                                c.getProvincia(), c.getDireccion(), c.getMovil(), pA.getId(), pA.getFechaPedido(), pA.getFechaEntregaEstimada(),
-//                                pA.getEstado(), pA.getComentario(), pA.getProductos()));
-//
-//                    }
-//                }
-//            }
-//        }
         Collections.sort(pedidosAsignadosT);
         return pedidosAsignadosT;
     }
@@ -915,90 +902,132 @@ public class Controlador implements Serializable {
 
     // Metodo que recupera una copia de seguridad en la ruta que nos pasen
     public boolean recuperaBackup(String rutaBackup) {
-        /*Controlador recuperado = Persistencia.recuperaBackup(rutaBackup);
-        if (recuperado == null) return false;
-        //Borramos a los clientes en disco
+        ArrayList<Cliente> clientesR = Persistencia.recuperaClientesBackup(rutaBackup);
+        ArrayList<Trabajador> trabajadoresR = Persistencia.recuperaTrabajadoresBackup(rutaBackup);
+        ArrayList<Admin> adminsR = Persistencia.recuperaAdminsBackup(rutaBackup);
+        ArrayList<Producto> catalogoR = Persistencia.recuperaProductosBackup(rutaBackup);
+
+        if (clientesR == null || trabajadoresR == null || adminsR == null || catalogoR == null) return false;
+
+
+        // Borramos de la BBDD
         for (Cliente c : getClientes()) {
-            //Persistencia.borraCliente(c.getId());
             daoClienteSQL.delete(dao, c);
         }
-        ArrayList<Trabajador> trabajadores = recuperado.getTrabajadores();
-        getTrabajadores() = trabajadores;
-        //Recuperamos los clientes
-        for (Cliente c : getClientes()) {
-            //Persistencia.guardaClienteEnDisco(c);
-            daoClienteSQL.insert(dao, c);
-        }
 
-        //Borramos a los trabajadores en disco
         for (Trabajador t : getTrabajadores()) {
-            //Persistencia.borraTrabajador(t.getId());
             daoTrabajadorSQL.delete(dao, t);
         }
-        //Recuperamos los trabajadores
-        trabajadores = recuperado.trabajadores;
-        //Guardamos los trabajadores en disco
-        for (Trabajador t : getTrabajadores()) {
-            //Persistencia.guardaTrabajadorEnDisco(t);
-            daoTrabajadorSQL.insert(dao, t);
-        }
-        admins = recuperado.admins;
 
-        //Borramos a los productos en disco
+        for (Admin a : getAdmins()) {
+            daoAdminSQL.delete(dao, a);
+        }
+
         for (Producto p : getCatalogo()) {
-            //Persistencia.borraProductoEnDisco(p.getId());
             daoProductoSQL.delete(dao, p);
         }
-        catalogo = recuperado.catalogo;
-        //Guardamos los productos en disco
-        for (Producto p : getCatalogo()) {
-            //Persistencia.guardaProductoEnDisco(p);
+
+
+        // Recuperamos
+        for (Producto p : catalogoR) {
             daoProductoSQL.insert(dao, p);
-        }*/
+        }
+
+        for (Admin a : adminsR) {
+            daoAdminSQL.insert(dao, a);
+        }
+
+        for (Trabajador t : trabajadoresR) {
+            daoTrabajadorSQL.insert(dao, t);
+        }
+
+        for (Cliente c : clientesR) {
+            daoClienteSQL.insert(dao, c);
+            if (!c.pedidosRam().isEmpty()) {
+                for (Pedido p : c.pedidosRam()) {
+                    daoPedidoSQL.insert(dao, p, c);
+                    daoPedidoProductosSQL.insert(dao, p);
+                }
+            }
+            if (!c.carroRam().isEmpty()) {
+                for (Producto p : c.carroRam()) {
+                    daoCarroSQL.insert(dao, c, p);
+                }
+            }
+        }
+
+        for (Trabajador t : trabajadoresR) {
+            if (!t.pedidosAsignadosRam().isEmpty()) {
+                for (Pedido p : t.pedidosAsignadosRam()) {
+                    daoPedidoSQL.updateTrabajador(dao, p, t);
+                }
+            }
+        }
+
         return true;
     }
 
     // Metodo que recupera una copia de seguridad en la ruta por defecto
     public boolean recuperaBackup() {
-        /*Controlador recuperado = Persistencia.recuperaBackup();
-        if (recuperado == null) return false;
-        //Borramos a los clientes en disco
+        ArrayList<Cliente> clientesR = Persistencia.recuperaClientesBackup();
+        ArrayList<Trabajador> trabajadoresR = Persistencia.recuperaTrabajadoresBackup();
+        ArrayList<Admin> adminsR = Persistencia.recuperaAdminsBackup();
+        ArrayList<Producto> catalogoR = Persistencia.recuperaProductosBackup();
+
+        if (clientesR == null || trabajadoresR == null || adminsR == null || catalogoR == null) return false;
+
+        // Borramos de la BBDD
         for (Cliente c : getClientes()) {
-            //Persistencia.borraCliente(c.getId());
             daoClienteSQL.delete(dao, c);
         }
-        clientes = recuperado.clientes;
-        //Recuperamos los clientes
-        for (Cliente c : getClientes()) {
-            //Persistencia.guardaClienteEnDisco(c);
-            daoClienteSQL.insert(dao, c);
-        }
 
-        //Borramos a los trabajadores en disco
         for (Trabajador t : getTrabajadores()) {
-            //Persistencia.borraTrabajador(t.getId());
             daoTrabajadorSQL.delete(dao, t);
         }
-        //Recuperamos los trabajadores
-        trabajadores = recuperado.trabajadores;
-        //Guardamos los trabajadores en disco
-        for (Trabajador t : getTrabajadores()) {
-            //Persistencia.guardaTrabajadorEnDisco(t);
-            daoTrabajadorSQL.insert(dao, t);
-        }
-        admins = recuperado.admins;
 
-        //Borramos a los productos en disco
+        for (Admin a : getAdmins()) {
+            daoAdminSQL.delete(dao, a);
+        }
+
         for (Producto p : getCatalogo()) {
-            //Persistencia.borraProductoEnDisco(p.getId());
             daoProductoSQL.delete(dao, p);
         }
-        catalogo = recuperado.catalogo;
-        //Guardamos los productos en disco
-        for (Producto p : getCatalogo()) {
-            //Persistencia.guardaProductoEnDisco(p);
+
+        // Recuperamos
+        for (Producto p : catalogoR) {
             daoProductoSQL.insert(dao, p);
-        }*/
+        }
+
+        for (Admin a : adminsR) {
+            daoAdminSQL.insert(dao, a);
+        }
+
+        for (Trabajador t : trabajadoresR) {
+            daoTrabajadorSQL.insert(dao, t);
+        }
+
+        for (Cliente c : clientesR) {
+            daoClienteSQL.insert(dao, c);
+            if (!c.pedidosRam().isEmpty()) {
+                for (Pedido p : c.pedidosRam()) {
+                    daoPedidoSQL.insert(dao, p, c);
+                    daoPedidoProductosSQL.insert(dao, p);
+                }
+            }
+            if (!c.carroRam().isEmpty()) {
+                for (Producto p : c.carroRam()) {
+                    daoCarroSQL.insert(dao, c, p);
+                }
+            }
+        }
+
+        for (Trabajador t : trabajadoresR) {
+            if (!t.pedidosAsignadosRam().isEmpty()) {
+                for (Pedido p : t.pedidosAsignadosRam()) {
+                    daoPedidoSQL.updateTrabajador(dao, p, t);
+                }
+            }
+        }
         return true;
     }
 

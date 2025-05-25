@@ -3,13 +3,14 @@ package DAO;
 import models.Cliente;
 import models.Producto;
 
+import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class DAOCarroSQL implements DAOCarro{
+public class DAOCarroSQL implements DAOCarro, Serializable {
     private final DAOProductoSQL daoProductoSQL = new DAOProductoSQL();
 
     @Override
@@ -21,7 +22,7 @@ public class DAOCarroSQL implements DAOCarro{
         try {
             dao.open();
             PreparedStatement ps = dao.getConn().prepareStatement(sentencia);
-            try (ResultSet rs = ps.executeQuery()){
+            try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     listaId.add(rs.getInt("idProducto"));
                 }
@@ -31,9 +32,11 @@ public class DAOCarroSQL implements DAOCarro{
             throw new RuntimeException(e);
         }
 
-        for (Producto p : daoProductoSQL.readAll(dao)) {
-            for (Integer id : listaId) {
-                if (p.getId() == id) productos.add(p);
+        if (!listaId.isEmpty()) {
+            for (Producto p : daoProductoSQL.readAll(dao)) {
+                for (Integer id : listaId) {
+                    if (p.getId() == id) productos.add(p);
+                }
             }
         }
         return productos;

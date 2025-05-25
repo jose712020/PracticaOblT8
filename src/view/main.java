@@ -579,7 +579,8 @@ public class main {
         ArrayList<Trabajador> trabajadores = controlador.getTrabajadores();
         ArrayList<Pedido> pedidosSinAsignar = controlador.pedidosSinTrabajador();
 
-        if (pedidosSinAsignar.isEmpty()) System.out.println("No se ha realizado ningún pedido o no hay pedidos para asignar...");
+        if (pedidosSinAsignar.isEmpty())
+            System.out.println("No se ha realizado ningún pedido o no hay pedidos para asignar...");
         else if (trabajadores.isEmpty()) System.out.println("No hay trabajadores...");
         else {
             Pedido pedidoTemp = null;
@@ -1253,7 +1254,8 @@ public class main {
         if (numPedidosSinTrabajador == 0) mensaje = "No hay pedidos para asignar.";
         else if (numPedidosSinTrabajador == 1) {
             mensaje = "Tenemos " + numPedidosSinTrabajador + " pedido sin asignar. Debe asignarlos a un trabajador.";
-        } else mensaje = "Tenemos " + numPedidosSinTrabajador + " pedidos sin asignar. Debe asignarlos a un trabajador.";
+        } else
+            mensaje = "Tenemos " + numPedidosSinTrabajador + " pedidos sin asignar. Debe asignarlos a un trabajador.";
 
         System.out.println("Bienvenido Administrador. " + mensaje);
         System.out.printf(""" 

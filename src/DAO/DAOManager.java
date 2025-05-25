@@ -1,10 +1,11 @@
 package DAO;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DAOManager {
+public class DAOManager implements Serializable {
 
     private  Connection conn;
     private final String URL;

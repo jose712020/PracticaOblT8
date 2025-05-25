@@ -11,6 +11,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.checkerframework.checker.units.qual.C;
 import utils.Utils;
 
 import java.io.*;
@@ -515,77 +516,282 @@ public class Persistencia {
 
     // Metodo que crea una copia de seguridad en la ruta que nos pasen
     public static boolean creaBackup(String rutaBackup, Controlador controlador) {
+        boolean bandera = false;
         File carpetaBackup = new File(rutaBackup);
 
         if (!carpetaBackup.exists()) carpetaBackup.mkdirs();
+        // Creamos to
+        ArrayList<Cliente> clientes = controlador.getClientes();
+        ArrayList<Trabajador> trabajadores = controlador.getTrabajadores();
+        ArrayList<Admin> admins = controlador.getAdmins();
+        ArrayList<Producto> productos = controlador.getCatalogo();
 
         try {
-            FileOutputStream fos = new FileOutputStream(carpetaBackup + "\\" + "copiaSeguridad.backup");
+            FileOutputStream fos = new FileOutputStream(carpetaBackup + "\\" + "copiaSeguridadC.backup");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(controlador);
+            oos.writeObject(clientes);
             oos.close();
             fos.close();
-            return true;
+            bandera = true;
         } catch (IOException e) {
-            return false;
+            bandera = false;
         }
+
+        try {
+            FileOutputStream fos = new FileOutputStream(carpetaBackup + "\\" + "copiaSeguridadT.backup");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(trabajadores);
+            oos.close();
+            fos.close();
+            bandera = true;
+        } catch (IOException e) {
+            bandera = false;
+        }
+
+        try {
+            FileOutputStream fos = new FileOutputStream(carpetaBackup + "\\" + "copiaSeguridadA.backup");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(admins);
+            oos.close();
+            fos.close();
+            bandera = true;
+        } catch (IOException e) {
+            bandera = false;
+        }
+
+        try {
+            FileOutputStream fos = new FileOutputStream(carpetaBackup + "\\" + "copiaSeguridadP.backup");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(productos);
+            oos.close();
+            fos.close();
+            bandera = true;
+        } catch (IOException e) {
+            bandera = false;
+        }
+        return bandera;
     }
 
     // Metodo que crea una copia de seguridad en la ruta por defecto
     public static boolean creaBackup(Controlador controlador) {
+        boolean bandera = false;
         File carpetaBackup = new File(leeRutaBackup());
 
         if (!carpetaBackup.exists()) carpetaBackup.mkdirs();
+        // Creamos to
+        ArrayList<Cliente> clientes = controlador.getClientes();
+        ArrayList<Trabajador> trabajadores = controlador.getTrabajadores();
+        ArrayList<Admin> admins = controlador.getAdmins();
+        ArrayList<Producto> productos = controlador.getCatalogo();
 
         try {
-            FileOutputStream fos = new FileOutputStream(carpetaBackup + "\\" + "copiaSeguridad.backup");
+            FileOutputStream fos = new FileOutputStream(carpetaBackup + "\\" + "copiaSeguridadC.backup");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(controlador);
+            oos.writeObject(clientes);
             oos.close();
             fos.close();
-            return true;
+            bandera = true;
         } catch (IOException e) {
-            return false;
+            bandera = false;
         }
+
+        try {
+            FileOutputStream fos = new FileOutputStream(carpetaBackup + "\\" + "copiaSeguridadT.backup");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(trabajadores);
+            oos.close();
+            fos.close();
+            bandera = true;
+        } catch (IOException e) {
+            bandera = false;
+        }
+
+        try {
+            FileOutputStream fos = new FileOutputStream(carpetaBackup + "\\" + "copiaSeguridadA.backup");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(admins);
+            oos.close();
+            fos.close();
+            bandera = true;
+        } catch (IOException e) {
+            bandera = false;
+        }
+
+        try {
+            FileOutputStream fos = new FileOutputStream(carpetaBackup + "\\" + "copiaSeguridadP.backup");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(productos);
+            oos.close();
+            fos.close();
+            bandera = true;
+        } catch (IOException e) {
+            bandera = false;
+        }
+        return bandera;
     }
 
-    // Metodo que recupera una copia de seguridad en la ruta que nos pasen
-    public static Controlador recuperaBackup(String rutaBackup) {
-        Controlador recuperado = null;
+    // Metodo que recupera clientes de una copia de seguridad en la ruta que nos pasen
+    public static ArrayList<Cliente> recuperaClientesBackup(String rutaBackup) {
+        ArrayList<Cliente> clientes = new ArrayList<>();
 
         File carpetaCopia = new File(rutaBackup);
 
-        if (!carpetaCopia.exists()) return recuperado;
+        if (!carpetaCopia.exists()) return clientes;
         try {
-            FileInputStream fis = new FileInputStream(rutaBackup + "\\" + "copiaSeguridad.backup");
+            FileInputStream fis = new FileInputStream(rutaBackup + "\\" + "copiaSeguridadC.backup");
             ObjectInputStream ois = new ObjectInputStream(fis);
-            recuperado = (Controlador) ois.readObject();
+            clientes = (ArrayList<Cliente>) ois.readObject();
             ois.close();
             fis.close();
         } catch (IOException | ClassNotFoundException e) {
             return null;
         }
 
-        return recuperado;
+        return clientes;
     }
 
-    // Metodo que recupera una copia de seguridad en la ruta por defecto
-    public static Controlador recuperaBackup() {
-        Controlador recuperado = null;
-        File carpetaCopia = new File(leeRutaBackup());
-        if (!carpetaCopia.exists()) return null;
+    // Metodo que recupera clientes de una copia de seguridad en la ruta que nos pasen
+    public static ArrayList<Trabajador> recuperaTrabajadoresBackup(String rutaBackup) {
+        ArrayList<Trabajador> trabajadores = new ArrayList<>();
 
+        File carpetaCopia = new File(rutaBackup);
+
+        if (!carpetaCopia.exists()) return trabajadores;
         try {
-            FileInputStream fis = new FileInputStream(carpetaCopia + "\\" + "copiaSeguridad.backup");
+            FileInputStream fis = new FileInputStream(rutaBackup + "\\" + "copiaSeguridadT.backup");
             ObjectInputStream ois = new ObjectInputStream(fis);
-            recuperado = (Controlador) ois.readObject();
+            trabajadores = (ArrayList<Trabajador>) ois.readObject();
             ois.close();
             fis.close();
         } catch (IOException | ClassNotFoundException e) {
             return null;
         }
 
-        return recuperado;
+        return trabajadores;
+    }
+
+    // Metodo que recupera admins de una copia de seguridad en la ruta que nos pasen
+    public static ArrayList<Admin> recuperaAdminsBackup(String rutaBackup) {
+        ArrayList<Admin> admins = new ArrayList<>();
+
+        File carpetaCopia = new File(rutaBackup);
+
+        if (!carpetaCopia.exists()) return admins;
+        try {
+            FileInputStream fis = new FileInputStream(rutaBackup + "\\" + "copiaSeguridadA.backup");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            admins = (ArrayList<Admin>) ois.readObject();
+            ois.close();
+            fis.close();
+        } catch (IOException | ClassNotFoundException e) {
+            return null;
+        }
+
+        return admins;
+    }
+
+    // Metodo que recupera productos de una copia de seguridad en la ruta que nos pasen
+    public static ArrayList<Producto> recuperaProductosBackup(String rutaBackup) {
+        ArrayList<Producto> productos = new ArrayList<>();
+
+        File carpetaCopia = new File(rutaBackup);
+
+        if (!carpetaCopia.exists()) return productos;
+        try {
+            FileInputStream fis = new FileInputStream(rutaBackup + "\\" + "copiaSeguridadP.backup");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            productos = (ArrayList<Producto>) ois.readObject();
+            ois.close();
+            fis.close();
+        } catch (IOException | ClassNotFoundException e) {
+            return null;
+        }
+
+        return productos;
+    }
+
+    // Metodo que recupera clientes de una copia de seguridad en la ruta por defecto
+    public static ArrayList<Cliente> recuperaClientesBackup() {
+        ArrayList<Cliente> clientes = new ArrayList<>();
+        File carpetaCopia = new File(leeRutaBackup());
+        if (!carpetaCopia.exists()) return clientes;
+
+        try {
+            FileInputStream fis = new FileInputStream(carpetaCopia + "\\" + "copiaSeguridadC.backup");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            clientes = (ArrayList<Cliente>) ois.readObject();
+            ois.close();
+            fis.close();
+        } catch (IOException | ClassNotFoundException e) {
+            return null;
+        }
+
+        for (Cliente c : clientes) {
+            c.inicializarDao();
+        }
+
+        return clientes;
+    }
+
+    // Metodo que recupera trabajadores de una copia de seguridad en la ruta por defecto
+    public static ArrayList<Trabajador> recuperaTrabajadoresBackup() {
+        ArrayList<Trabajador> trabajadores = new ArrayList<>();
+        File carpetaCopia = new File(leeRutaBackup());
+        if (!carpetaCopia.exists()) return trabajadores;
+
+        try {
+            FileInputStream fis = new FileInputStream(carpetaCopia + "\\" + "copiaSeguridadT.backup");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            trabajadores = (ArrayList<Trabajador>) ois.readObject();
+            ois.close();
+            fis.close();
+        } catch (IOException | ClassNotFoundException e) {
+            return null;
+        }
+
+        for (Trabajador t : trabajadores) {
+            t.inicializarDao();
+        }
+
+        return trabajadores;
+    }
+
+    // Metodo que recupera admins de una copia de seguridad en la ruta por defecto
+    public static ArrayList<Admin> recuperaAdminsBackup() {
+        ArrayList<Admin> admins = new ArrayList<>();
+        File carpetaCopia = new File(leeRutaBackup());
+        if (!carpetaCopia.exists()) return admins;
+
+        try {
+            FileInputStream fis = new FileInputStream(carpetaCopia + "\\" + "copiaSeguridadA.backup");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            admins = (ArrayList<Admin>) ois.readObject();
+            ois.close();
+            fis.close();
+        } catch (IOException | ClassNotFoundException e) {
+            return null;
+        }
+
+        return admins;
+    }
+
+    // Metodo que recupera productos de una copia de seguridad en la ruta por defecto
+    public static ArrayList<Producto> recuperaProductosBackup() {
+        ArrayList<Producto> productos = new ArrayList<>();
+        File carpetaCopia = new File(leeRutaBackup());
+        if (!carpetaCopia.exists()) return productos;
+
+        try {
+            FileInputStream fis = new FileInputStream(carpetaCopia + "\\" + "copiaSeguridadP.backup");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            productos = (ArrayList<Producto>) ois.readObject();
+            ois.close();
+            fis.close();
+        } catch (IOException | ClassNotFoundException e) {
+            return null;
+        }
+
+        return productos;
     }
 
     // Metodo que borra al trabajador del disco

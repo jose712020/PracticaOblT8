@@ -3,6 +3,7 @@ package DAO;
 import models.Pedido;
 import models.Producto;
 
+import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,7 +11,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class DAOPedidoProductosSQL implements DAOPedidoProductos {
+public class DAOPedidoProductosSQL implements DAOPedidoProductos, Serializable {
     private final DAOProductoSQL daoProducto = new DAOProductoSQL();
 
     @Override

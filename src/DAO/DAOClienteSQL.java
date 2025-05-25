@@ -2,13 +2,14 @@ package DAO;
 
 import models.Cliente;
 
+import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class DAOClienteSQL implements DAOCliente{
+public class DAOClienteSQL implements DAOCliente, Serializable {
     private final DAOPedidoSQL daoPedidoSQL = new DAOPedidoSQL();
     private final DAOCarroSQL daoCarroSQL = new DAOCarroSQL();
 

@@ -4,12 +4,13 @@ import models.Cliente;
 import models.Pedido;
 import models.Trabajador;
 
+import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class DAOPedidoSQL implements DAOPedido {
+public class DAOPedidoSQL implements DAOPedido, Serializable {
     private final DAOPedidoProductosSQL daoPedidoProductos = new DAOPedidoProductosSQL();
 
     @Override

@@ -14,8 +14,8 @@ public class Trabajador implements Serializable {
     private String email;
     private int movil;
     private ArrayList<Pedido> pedidosAsignados;
-    private DAOManager dao = DAOManager.getSinglentonInstance();
-    private DAOPedidoSQL daoPedidoSQL = new DAOPedidoSQL();
+    private transient DAOManager dao = DAOManager.getSinglentonInstance();
+    private transient DAOPedidoSQL daoPedidoSQL = new DAOPedidoSQL();
 
     //Constructor
     public Trabajador(int id, String nombre, String pass, String email, int movil) {
@@ -140,5 +140,14 @@ public class Trabajador implements Serializable {
     // Metodo que comprueba el numero de pedidos completados
     public int numPedidosCompletados() {
         return getPedidosCompletados().size();
+    }
+
+    public void inicializarDao() {
+        dao = DAOManager.getSinglentonInstance();
+        daoPedidoSQL = new DAOPedidoSQL();
+    }
+
+    public ArrayList<Pedido> pedidosAsignadosRam() {
+        return pedidosAsignados;
     }
 }
