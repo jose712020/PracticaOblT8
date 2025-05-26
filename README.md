@@ -907,4 +907,24 @@ Consta de 7 tablas nuestra base de datos de la aplicación:
 
 ![image](https://github.com/user-attachments/assets/64913b17-2e2e-413f-94fc-29cf9664e447)
 
+-**PEDIDO_PRODUCTOS** --> Se almacenan los productos y el id del pedido de cada producto
+
+![image](https://github.com/user-attachments/assets/a79f9344-0cab-4c31-9440-816559aed7f1)
+
+-**PRODUCTO** --> Se almacenan los productos del catálogo de la tienda
+
+![image](https://github.com/user-attachments/assets/2f9db120-b7a8-4500-9b32-976b318bfc57)
+
+-**TRABAJADOR** --> Se almacenan los trabajadores de la tienda creados por el administrador
+
+![image](https://github.com/user-attachments/assets/2f319daa-8366-4e22-b2c7-5d68ed8cc2fb)
+
+ASÍ QUEDARÍA EL GRÁFICO GENERAL DE LA BASE DE DATOS DE NUESTRO PROGRAMA:
+
+![image](https://github.com/user-attachments/assets/7e83c96a-155c-41b6-acef-6e4cca4167c5)
+
+
+
+
+
 
